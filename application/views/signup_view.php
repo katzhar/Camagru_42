@@ -26,16 +26,17 @@
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         }
     </style>
-    	<title>Camagru | Registration</title>
+    	<title>Camagru | Sign Up</title>
     <body>
       <div id="container">
         <div id="one">
             CAMAGRU<br><br>
-            <form method="post" action="">
-                <input type="text" name="login" placeholder="e-mail or login" value=""><br><br>
-                <input type="password" name="password" placeholder="password" value="">
-            </form><br>
-                <a href="/registration/confirm"><input type="submit" name="submit" value="SignUp"></a><br><br>
+            <form method="post" action="/signup/confirm">
+                <input type="text" name="e-mail" placeholder="e-mail" value="" required="required"><br><br>
+                <input type="text" name="login" placeholder="login" value="" required="required"><br><br>
+                <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
+                <input type="submit" name="submit" value="Sign Up"><br><br>
+       </form>
       </div>
       <br>
         </div>

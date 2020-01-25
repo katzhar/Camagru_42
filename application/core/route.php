@@ -43,7 +43,8 @@ class Route {
 			правильно было бы кинуть здесь исключение,
 			но для упрощения сразу сделаем редирект на страницу 404
 			*/
-			Route::ErrorPage404();
+			echo "Error";
+			// Route::ErrorPage404();
 		}
 		// создаем контроллер
 		$controller = new $controller_name;
@@ -53,15 +54,15 @@ class Route {
 			// вызываем действие контроллера
 			$controller->$action();
 		}
-		else {
-			// здесь также разумнее было бы кинуть исключение
-			Route::ErrorPage404();
-		}
+		// else {
+		// 	// здесь также разумнее было бы кинуть исключение
+		// 	Route::ErrorPage404();
+		// }
 	}
-	function ErrorPage404() {
-        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-        header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		header('Location:'.$host.'404');
-    }
+	// function ErrorPage404() {
+    //     $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+    //     header('HTTP/1.1 404 Not Found');
+	// 	header("Status: 404 Not Found");
+	// 	header('Location:'.$host.'404');
+    // }
 }

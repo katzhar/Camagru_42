@@ -3,6 +3,7 @@
     <style>
         div {
             border-radius: 3px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
         form {
             margin: 10px;
@@ -17,7 +18,6 @@
             margin-top: 15%;
         }
         #one {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             color: rgb(82, 82, 82);
             height: 80%;
             width: 20%;
@@ -26,6 +26,17 @@
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         }
         #two {
+            font-size: 9px;
+            padding: 1%;
+        }
+        a {
+            text-decoration: none;
+            color: rgb(82, 82, 82);
+        }
+        a:hover {
+            font-weight: bold; 
+        }
+        #three {
             font-size: 9px;
             color: rgb(82, 82, 82);
             height: 20%;
@@ -41,16 +52,18 @@
         <div id="one">
             CAMAGRU<br><br>
             <form method="post" action="/auth/login">
-                <input type="text" name="login" placeholder="e-mail or login" value="" required="required"><br><br>
+                <input type="text" name="login" placeholder="e-mail" value="" required="required"><br><br>
                 <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
-       <input type="submit" name="submit" value="Log In"><br><br>
+       <input type="submit" name="submit" value="Log In"><br>
        </form>
+       <div id="two">
+       <a href="#">FORGET YOUR PASSWORD?</a><br>
+      </div>
       </div>
       <br>
-    <div id="two">
-        DON'T HAVE AN ACCOUNT? <br><br>
-        <a href="/registration"><input type="submit" name="submit" value="Sign Up"></a><br><br>
-      </div>
+    <div id="three">
+        DON'T HAVE AN ACCOUNT? <a href="/signup">SIGN UP</a><br>
+    </div>
         </div>
     </body>
     </html>
