@@ -1,12 +1,12 @@
 <?php
 $db_name = "camagru_db";
-$db_hostname = "172.17.0.3";
+$db_hostname = "172.17.0.2";
 $db_user = "root";
 $db_password = "root";
 $db_charset = "utf8";
 
 #mysql container's ip 
-$dsn = "mysql:host=172.17.0.3;dbname=" . $db_name;
+$dsn = "mysql:host=172.17.0.2;dbname=" . $db_name;"charset=" . $db_charset;
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

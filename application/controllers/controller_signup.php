@@ -1,22 +1,22 @@
 <?php
 class Controller_Signup extends Controller {
+	private static $view_page = 'signup_view.php'; 
 	public function __construct() {
 		$this->view = new View();
 		$this->model = new Model_Signup();
 	}
-	function action_index() {	
-		$this->view->generate('signup_view.php', 'template_view.php');
+	
+	function action_index($param = null) {	
+		$this->view->generate(Controller_Signup::$view_page, Controller::$template, $param);
 	}
 
-	function action_confirm() {
-		$this->view->generate('empty_view.php', 'template_view.php');
-		$signup = $this->model->signup();
-		if ($signup == "ERROR") {
-			echo "ERROR";	
+	function action_create() {
+		$page = $this->model->create_acc($_POST['email'], $_POST['login'], $_POST['password']); 
+		switch ($page) {
+			case (Model::ERROR):
+				$this->view->generate(Controller_Signup::$view_page, Controller::$template, Model::ERROR);
+			case (Model::SUCCESS):
+				$this->view->generate(Controller_Signup::$view_page, Controller::$template, Model::SUCCESS);
 		}
-		else if ($signup == "OK") {
-			echo "Please check your e-mail and verify your account";
-		}
-	
 	}
 }

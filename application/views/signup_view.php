@@ -31,11 +31,17 @@
       <div id="container">
         <div id="one">
             CAMAGRU<br><br>
-            <form method="post" action="/signup/confirm">
-                <input type="text" name="e-mail" placeholder="e-mail" value="" required="required"><br><br>
+            <form method="post" action="/signup/create">
+                <input type="text" name="email" placeholder="email" value="" required="required"><br><br>
                 <input type="text" name="login" placeholder="login" value="" required="required"><br><br>
                 <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
                 <input type="submit" name="submit" value="Sign Up"><br><br>
+    <?php
+        if ($data == Model::ERROR) 
+            echo 'ERROR';
+        else if ($data == Model::SUCCESS) 
+            echo 'SUCCESS'; 
+    ?>
        </form>
       </div>
       <br>
