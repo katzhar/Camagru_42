@@ -36,12 +36,6 @@
                 <input type="text" name="login" placeholder="login" value="" required="required"><br><br>
                 <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
                 <input type="submit" name="submit" value="Sign Up"><br><br>
-    <?php
-        if ($data == Model::ERROR) 
-            echo 'ERROR';
-        else if ($data == Model::SUCCESS) 
-            echo 'SUCCESS'; 
-    ?>
        </form>
       </div>
       <br>

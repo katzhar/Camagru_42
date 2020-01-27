@@ -5,16 +5,16 @@ class Model_Signup extends Model {
 	public function create_acc($email, $login, $password) {
 			include "config/database.php";
 			try {
+				// Create connection
 				$dbh = new PDO($dsn, $db_user, $db_password, $options);
 				$dbh->exec('USE camagru_db');
 				$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password));
 				if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) 
 					return Model::SUCCESS;
-				else 
-					return Model::ERROR;
+				return Model::ERROR;
 			}
-				catch(PDOxception $err) {
-					$err->getMessage();
+			catch(PDOxception $err) {
+				$err->getMessage();
 			}
 	}
 

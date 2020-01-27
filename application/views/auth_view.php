@@ -52,7 +52,7 @@
         <div id="one">
             CAMAGRU<br><br>
             <form method="post" action="/auth/login">
-                <input type="text" name="login" placeholder="e-mail" value="" required="required"><br><br>
+                <input type="text" name="login" placeholder="login" value="" required="required"><br><br>
                 <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
        <input type="submit" name="submit" value="Log In"><br>
        </form>

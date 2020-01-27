@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<style> 
- body {
-     color: red; 
-     text-align: center;
- }
-</style>
-</head>
-<body>
-</body>
-</html>
+<?php
+        if ($data == Model::ERROR) 
+            echo 'ERROR';
+        else if ($data == Model::SUCCESS) 
+            echo 'SUCCESS'; 
+        else if ($data == Model::INCORRECT_LOG_OR_PSSWRD) 
+            echo 'INCORRECT_LOG_OR_PSSWRD'; 
+            
