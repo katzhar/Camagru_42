@@ -22,5 +22,4 @@ try {
 catch(PDOException $err) {
         echo 'ERROR creating table users' . $err->getMessage();
 }
-
 ?>

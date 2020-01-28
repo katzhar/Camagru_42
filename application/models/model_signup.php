@@ -5,7 +5,6 @@ class Model_Signup extends Model {
 	public function create_acc($email, $login, $password) {
 			include "config/database.php";
 			try {
-				// Create connection
 				$dbh = new PDO($dsn, $db_user, $db_password, $options);
 				$dbh->exec('USE camagru_db');
 				$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password));
@@ -29,4 +28,14 @@ class Model_Signup extends Model {
 			return Model::ERROR;
 		}
 	}
+
+		private function send_email($hostaddr, $random_link) {
+			$to = $_POST('email');
+			$subject = "Please, confirm your account";
+			$txt = "Hello! Thanks for registration! To confirm your account, follow this link:" . $hostaddr,  ;
+			$headers = "From: zahrovovaea@gmail.com" . "\r\n" .
+			"CC: zahrovovaea@gmail.com";
+
+			mail($to,$subject,$txt,$headers);
+		}
 }
