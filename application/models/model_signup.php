@@ -37,8 +37,11 @@ class Model_Signup extends Model {
 		$body 		= "Hi, " . $login . "!" . "\r\n" . "Please verify your email address so we know that it's really you:" . "\r\n" . "http://" . $host . "/signup/create/" . $unique_link . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
 		$header 	= "From: info@camagru.com";
 					"CC: info@camagru.com";
-		if (mail($email, $subject, $body, $header)) 
-			header('location: ../main');
+		if (mail($email, $subject, $body, $header)) {
+			header('location: ../auth');
+			$this->chech_verification();
+		}
 		return Model::ERROR;
+		
 	}
 }
