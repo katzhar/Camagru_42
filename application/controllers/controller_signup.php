@@ -12,12 +12,13 @@ class Controller_Signup extends Controller {
 	}
 
 	function action_create() {
-		$page = $this->model->create_acc($_POST['email'], $_POST['login'], $_POST['password']); 
+		$page = $this->model->create_acc($_POST['email'], $_POST['login'], $_POST['password'], $_POST['email']); 
 		switch ($page) {
 			case (Model::ERROR):
 				$this->view->generate(Controller_Signup::$empty_page, Controller::$template, Model::ERROR);
 			case (Model::SUCCESS):
 				$this->view->generate(Controller_Signup::$empty_page, Controller::$template, Model::SUCCESS);
+				echo "hello";
 		}
 	}
 }

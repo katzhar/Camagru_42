@@ -14,6 +14,6 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-$hostaddr = "at-m3.21-school.ru/";
+$host = "at-g5.21-school.ru:8080";
 ?>
 

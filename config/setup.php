@@ -11,11 +11,13 @@ catch(PDOException $err) {
 }
 
 try {
-        $users_table = 'CREATE TABLE IF NOT EXISTS users 
+        $users_table = "CREATE TABLE IF NOT EXISTS users 
                 (id INT NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT, 
                 `e-mail` VARCHAR(255) NOT NULL, 
                 `login` VARCHAR(255) NOT NULL, 
-                `password` VARCHAR(255) NOT NULL)';
+                `password` VARCHAR(255) NOT NULL,
+                `unique_link` VARCHAR(255) DEFAULT NULL,
+                `verified` INT NOT NULL DEFAULT '0')";
         $dbh->exec($users_table);
         echo 'table users create succesfully';
 }
