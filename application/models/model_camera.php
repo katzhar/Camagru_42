@@ -33,12 +33,12 @@ public function upload_image_base()
     private function update_db($image_name) {
         require 'config/database.php';
 
-        $pdo = new PDO($DB_DSN, $DB_USER, $DB_PASS);
-
+        $pdo = new PDO($dsn, $db_user, $db_password);
+        $pdo->exec('USE camagru_db');
         $sql = 'INSERT INTO `Posts` (`User_ID`, `Image`, `Message`, `Creation_Date`) VALUES (?, ?, ?, NOW())';
 
-        $id = $_SESSION['Logged_user_ID'];
-        $message = isset($_POST['description']) ? mb_strimwidth($_POST['description'], 0, 250) : null;
+        $id = 1;// $_SESSION['Logged_user_ID'];
+        $message = 'hello pizza!';//isset($_POST['description']) ? mb_strimwidth($_POST['description'], 0, 250) : null;
 
         $sth = $pdo->prepare($sql);
         $sth->execute(array($id, $image_name, $message));
