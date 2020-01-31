@@ -20,8 +20,23 @@ try {
                 `verified` INT NOT NULL DEFAULT '0')";
         $dbh->exec($users_table);
         echo 'table users create succesfully';
+
 }
 catch(PDOException $err) {
         echo 'ERROR creating table users' . $err->getMessage();
 }
-?>
+try {
+    $dbh->exec('CREATE TABLE IF NOT EXISTS `post_img`
+    (
+        `Post_ID` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+        `User_ID` INT UNSIGNED NOT NULL,
+        `Image` VARCHAR(32) NOT NULL,
+        `Message` VARCHAR(128),
+        `Likes` INT UNSIGNED DEFAULT 0 NOT NULL,
+        `Creation_Date` DATETIME DEFAULT NOW() NOT NULL
+    )');
+    echo 'table post_img create succesfully';
+
+} catch (PDOException $err) {
+    echo 'ERROR creating table post_img' . $err->getMessage();
+}

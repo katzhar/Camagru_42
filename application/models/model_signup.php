@@ -2,7 +2,7 @@
 class Model_Signup extends Model {
 	private static $fill_db = "INSERT INTO users (`e-mail`, `login`, `password`, `unique_link`) VALUES (:email, :login, :password, :unique_link)";
 
-	public function create_acc($email, $login, $password, $unique_link) {
+	public function create_acc($email, $login, $password) {
 			include "config/database.php";
 			try {
 				$dbh = new PDO($dsn, $db_user, $db_password, $options);
@@ -32,7 +32,6 @@ class Model_Signup extends Model {
 
 	function verification_email($email, $login, $unique_link) {
 		include "config/database.php";
-		$to 		= $email;
 		$subject 	= "Please verify your email address";
 		$body 		= "Hi, " . $login . "!" . "\r\n" . "Please verify your email address so we know that it's really you:" . "\r\n" . "http://" . $host . "/signup/create/" . $unique_link . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
 		$header 	= "From: info@camagru.com";
