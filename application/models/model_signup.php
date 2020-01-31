@@ -7,7 +7,7 @@ class Model_Signup extends Model {
 			try {
 				$dbh = new PDO($dsn, $db_user, $db_password, $options);
 				$dbh->exec('USE camagru_db');
-				$unique_link = hash('whirlpool', $_POST['email']);
+				$unique_link = time(hash('whirlpool', $_POST['email']));
 				$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password), 'unique_link' => $unique_link);
 				if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) 
 					$this->verification_email($email, $login, $unique_link);
@@ -38,9 +38,12 @@ class Model_Signup extends Model {
 					"CC: info@camagru.com";
 		if (mail($email, $subject, $body, $header)) {
 			header('location: ../auth');
-			$this->chech_verification();
+			// $this->check_verification($unique_link, );
 		}
 		return Model::ERROR;
-		
 	}
+
+	// function check_verification($unique_link, ) {
+
+	// }
 }
