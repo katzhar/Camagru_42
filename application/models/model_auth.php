@@ -1,6 +1,5 @@
 <?php
 class Model_Auth extends Model {
-
     public function check_user($login, $password) {
 		include "config/database.php";
 		$hash_password = hash('whirlpool', $password);
@@ -15,10 +14,13 @@ class Model_Auth extends Model {
 			if ($data) {
 				$_SESSION['login'] = $data['login'];
 				$_SESSION['password'] = $data['password'];
-				return Model::SUCCESS;
+				header('location: ../main');
+				return Model::SUCCESS;	
 			}
-			else
+			else {
+				header('location: ../auth');
 				return Model::INCORRECT_LOG_OR_PSSWRD;
+			}
 		}
 		catch (PDOException $err) {
             return Model::ERROR;
