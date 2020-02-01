@@ -70,7 +70,7 @@
                 unset($_SESSION['message']); 
                 ?>
        <div id="two">
-       <a href="#">FORGET YOUR PASSWORD?</a><br>
+       <a href="#">FORGOT PASSWORD?</a><br>
       </div>
       </div>
       <br>

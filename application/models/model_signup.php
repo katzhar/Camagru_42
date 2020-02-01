@@ -13,24 +13,26 @@ class Model_Signup extends Model {
 				$_SESSION['message'] = "PASSWORDS DOESN'T MATCH";
 				header('Location: ../signup');
 			}
-			else if ($password === strtolower($password) or strlen($password) < 8) {
-				$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 8 CHARACTERS AND 1 UPPERCASE LETTER";
+			else if ($password === strtolower($password) or strlen($password) < 4) {
+				$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 5 CHARACTERS AND 1 UPPERCASE LETTER";
+				header('Location: ../signup');
+			}
+			elseif (is_numeric($login) or strlen($login) < 4) {
+				$_SESSION['message'] = "YOUR USERNAME MUST CONTAIN AT LEAST 5 CHARACTERS";
 				header('Location: ../signup');
 			}
 			else {
 				try {
-						$dbh = new PDO($dsn, $db_user, $db_password, $options);
-						$dbh->exec('USE camagru_db');
-						if ($password === $password_confirm) {
-							$unique_link = time(hash('whirlpool', $_POST['email']));
-							$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password), 'unique_link' => $unique_link);
-							if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) 
-								$this->verification_email($email, $login, $unique_link);
-							return Model::ERROR;
-					}
+					$dbh = new PDO($dsn, $db_user, $db_password, $options);
+					$dbh->exec('USE camagru_db');
+					$unique_link = time(hash('whirlpool', $_POST['email']));
+					$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password), 'unique_link' => $unique_link);
+					if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) 
+						$this->verification_email($email, $login, $unique_link);
 				}
 				catch(PDOxception $err) {
 					$err->getMessage();
+					return Model::ERROR;
 				}
 			}
 	}
