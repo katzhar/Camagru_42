@@ -64,11 +64,11 @@
        <input type="submit" name="submit" value="Log In"><br>
        </form>
        <?php
-                if (isset($_SESSION['message'])) {
-                    echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
-                }
-                unset($_SESSION['message']); 
-                ?>
+            if (isset($_SESSION['message'])) {
+                echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
+            }
+            unset($_SESSION['message']); 
+        ?>
        <div id="two">
        <a href="#">FORGOT PASSWORD?</a><br>
       </div>

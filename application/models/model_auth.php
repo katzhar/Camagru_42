@@ -24,6 +24,7 @@ class Model_Auth extends Model {
 			}
 		}
 		catch (PDOException $err) {
+			$err->getMessage();
             return Model::ERROR;
         }
     }

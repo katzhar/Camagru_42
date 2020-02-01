@@ -18,8 +18,8 @@ class Controller_Auth extends Controller {
 		}
         $page = $this->model->check_user($_POST['login'], $_POST['password']); 
         switch ($page) {
-            case (Model::INCORRECT_LOG_OR_PSSWRD):
-                $this->view->generate(Controller_Auth::$auth_page, Controller::$template, Model::INCORRECT_LOG_OR_PSSWRD);
+            case (Model::ERROR):
+                $this->view->generate(Controller_Auth::$auth_page, Controller::$template, Model::ERROR);
             case (Model::SUCCESS):
                 $this->view->generate(Controller_Auth::$main_page, Controller::$template, Model::SUCCESS);
         }

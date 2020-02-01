@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
     <html lang="en">
     <style>
@@ -41,7 +40,7 @@
             color: red;
             font-size: 11px;
         }
-        #three {
+        #two {
             font-size: 9px;
             color: rgb(82, 82, 82);
             height: 20%;
@@ -64,14 +63,14 @@
                 <input type="submit" name="submit" value="Sign Up"><br>
        </form>
        <?php
-                if (isset($_SESSION['message'])) {
-                    echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
-                }
-                unset($_SESSION['message']); 
-                ?>
+            if (isset($_SESSION['message'])) {
+                echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
+            }
+            unset($_SESSION['message']); 
+        ?>
     </div>
     <br>
-        <div id="three">
+        <div id="two">
             ALREADY HAVE AN ACCOUNT? <a href="/auth">LOG IN</a><br>
         </div>
     </div>

@@ -24,4 +24,12 @@ class Controller_Signup extends Controller {
 				$this->view->generate(Controller_Signup::$auth_page, Controller::$template, Model::SUCCESS);
 		}
 	}
+	function action_confirm() {
+		$page = $this->model->confirm_user();
+		// switch ($page) {
+		// 	case (Model::SUCCESS):
+
+		// 	case (Model::ERROR):
+		// }
+	}
 }
