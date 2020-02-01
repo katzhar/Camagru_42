@@ -77,7 +77,7 @@ class Model_Signup extends Model {
 			$stmt->execute($arr);
 			$data = $stmt->fetch();
 			if ($data) {
-				$query = "UPDATE users SET verified = 1 WHERE id=?";
+				$query = "UPDATE users SET verified = 1 WHERE unique_link=?";
 				$stmt = $dbh->prepare($query);
 				$stmt->execute(array($data['unique_link']));
 				$hello = $stmt->fetch();
