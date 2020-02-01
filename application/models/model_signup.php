@@ -16,7 +16,7 @@ class Model_Signup extends Model {
 		else if ($password === strtolower($password) or strlen($password) < 4) {
 			$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 5 CHARACTERS AND 1 UPPERCASE LETTER";
 			header('Location: ../signup');
-			}
+		}
 		elseif (is_numeric($login) or strlen($login) < 4) {
 			$_SESSION['message'] = "YOUR USERNAME MUST CONTAIN AT LEAST 5 CHARACTERS";
 			header('Location: ../signup');
@@ -88,10 +88,10 @@ class Model_Signup extends Model {
 				echo 'ERROR';
 				return Model::ERROR;		
 			}
+		}
+		catch (PDOException $err) {
+			$err->getMessage();
+			return Model::ERROR;
+		}
 	}
-	catch (PDOException $err) {
-		$err->getMessage();
-		return Model::ERROR;
-	}
-}
 }

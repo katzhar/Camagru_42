@@ -71,7 +71,8 @@
     </div>
     <br>
         <div id="two">
-            ALREADY HAVE AN ACCOUNT? <a href="/auth">LOG IN</a><br>
+            ALREADY HAVE AN ACCOUNT? 
+            <a href="/auth">LOG IN</a><br>
         </div>
     </div>
     </body>
