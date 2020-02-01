@@ -1,17 +1,23 @@
 <?php
+session_start();
 class Model_Signup extends Model {
 	private static $fill_db = "INSERT INTO users (`e-mail`, `login`, `password`, `unique_link`) VALUES (:email, :login, :password, :unique_link)";
 
-	public function create_acc($email, $login, $password) {
+	public function create_acc($email, $login, $password, $password_confirm) {
 			include "config/database.php";
 			try {
 				$dbh = new PDO($dsn, $db_user, $db_password, $options);
 				$dbh->exec('USE camagru_db');
-				$unique_link = time(hash('whirlpool', $_POST['email']));
-				$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password), 'unique_link' => $unique_link);
-				if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) 
-					$this->verification_email($email, $login, $unique_link);
-				return Model::ERROR;
+				if ($password === $password_confirm) {
+					$unique_link = time(hash('whirlpool', $_POST['email']));
+					$arr = array('email' => $email, 'login' => $login, 'password' => hash("whirlpool", $password), 'unique_link' => $unique_link);
+					if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) 
+						$this->verification_email($email, $login, $unique_link);
+					return Model::ERROR;
+				}
+				else 
+					$_SESSION['message'] = "PASSWORDS DOESN'T MATCH";
+					header('Location: ../signup');
 			}
 			catch(PDOxception $err) {
 				$err->getMessage();

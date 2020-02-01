@@ -8,6 +8,13 @@
         form {
             margin: 10px;
         }
+        a {
+            text-decoration: none;
+            color: rgb(82, 82, 82);
+        }
+        a:hover {
+            font-weight: bold; 
+        }
         #container {
             display: flex;
             flex-direction: column;
@@ -29,13 +36,6 @@
             font-size: 9px;
             padding: 1%;
         }
-        a {
-            text-decoration: none;
-            color: rgb(82, 82, 82);
-        }
-        a:hover {
-            font-weight: bold; 
-        }
         #three {
             font-size: 9px;
             color: rgb(82, 82, 82);
@@ -44,6 +44,13 @@
             background: linear-gradient(20deg, #f9e6ff, #e6f9ff);
             padding: 1%;
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+        }
+        #msg {
+            padding: 3px;
+            font-weight: bold;
+            text-align: center;
+            color: red;
+            font-size: 11px;
         }
     </style>
     	<title>Camagru | Log In</title>
@@ -56,6 +63,12 @@
                 <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
        <input type="submit" name="submit" value="Log In"><br>
        </form>
+       <?php
+                if (isset($_SESSION['message'])) {
+                    echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
+                }
+                unset($_SESSION['message']); 
+                ?>
        <div id="two">
        <a href="#">FORGET YOUR PASSWORD?</a><br>
       </div>

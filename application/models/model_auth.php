@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Model_Auth extends Model {
     public function check_user($login, $password) {
 		include "config/database.php";
@@ -18,8 +19,9 @@ class Model_Auth extends Model {
 				return Model::SUCCESS;	
 			}
 			else {
-				header('location: ../auth');
-				return Model::INCORRECT_LOG_OR_PSSWRD;
+				$_SESSION['message'] = 'INCORRECT LOGIN OR PASSWORD';
+				header('Location: ../auth');
+				// return Model::INCORRECT_LOG_OR_PSSWRD;
 			}
 		}
 		catch (PDOException $err) {
