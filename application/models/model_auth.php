@@ -21,7 +21,6 @@ class Model_Auth extends Model {
 			else {
 				$_SESSION['message'] = 'INCORRECT LOGIN OR PASSWORD';
 				header('Location: ../auth');
-				// return Model::INCORRECT_LOG_OR_PSSWRD;
 			}
 		}
 		catch (PDOException $err) {

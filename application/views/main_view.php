@@ -3,6 +3,9 @@
 <head>
 <title>Camagru</title>
 <style>
+p {
+    text-align: center;
+}
 #container {
     display: flex;
     flex-direction: column;
@@ -27,10 +30,11 @@
 </style>
 </head>
 <body>
-<div id="container"><br>
+<p>WELCOME TO CAMAGRU, DARLING</p>
+<!-- <div id="container"><br>
 <div id="pic"></div><br>
 <div id="pic1"></div><br>
-<div id="pic2"></div><br>
+<div id="pic2"></div><br> -->
 </div>    
 </body>
 </html>
