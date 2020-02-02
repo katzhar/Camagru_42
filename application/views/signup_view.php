@@ -33,13 +33,6 @@
             padding: 1%;
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         }
-        #msg {
-            padding: 3px;
-            font-weight: bold;
-            text-align: center;
-            color: red;
-            font-size: 11px;
-        }
         #two {
             font-size: 9px;
             color: rgb(82, 82, 82);
@@ -48,6 +41,13 @@
             background: linear-gradient(20deg, #f9e6ff, #e6f9ff);
             padding: 1%;
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+        }
+        #msg {
+            padding: 3px;
+            font-weight: bold;
+            text-align: center;
+            color: red;
+            font-size: 11px;
         }
     </style>
     	<title>Camagru | Sign Up</title>

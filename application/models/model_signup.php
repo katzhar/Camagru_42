@@ -8,18 +8,22 @@ class Model_Signup extends Model {
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$_SESSION['message'] = "INVALID E-MAIL";
 			header('Location: ../signup');
+			exit();
 		}
 		else if ($password !== $password_confirm) {
 			$_SESSION['message'] = "PASSWORDS DOESN'T MATCH";
 			header('Location: ../signup');
+			exit();
 		}
 		else if ($password === strtolower($password) or strlen($password) < 4) {
 			$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 5 CHARACTERS AND 1 UPPERCASE LETTER";
 			header('Location: ../signup');
+			exit();
 		}
 		elseif (is_numeric($login) or strlen($login) < 4) {
 			$_SESSION['message'] = "YOUR USERNAME MUST CONTAIN AT LEAST 5 CHARACTERS";
 			header('Location: ../signup');
+			exit();
 		}
 		else {
 			try {
@@ -31,6 +35,7 @@ class Model_Signup extends Model {
 					$this->verification_email($email, $login, $unique_link);
 					return Model::SUCCESS;
 				}
+				return Model::ERROR;
 			}
 			catch(PDOxception $err) {
 				$err->getMessage();
@@ -84,10 +89,7 @@ class Model_Signup extends Model {
 				header('location: ../../main');
 				return Model::SUCCESS;
 			}
-			else {
-				echo 'ERROR';
-				return Model::ERROR;		
-			}
+			return Model::ERROR;		
 		}
 		catch (PDOException $err) {
 			$err->getMessage();
