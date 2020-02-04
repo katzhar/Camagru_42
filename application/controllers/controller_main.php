@@ -1,6 +1,15 @@
 <?php
 class Controller_Main extends Controller {
-	function action_index($param = NULL) {	
-		$this->view->generate('main_view.php', 'template_view.php');
-	}
+    public function __construct()
+    {
+        $this->view = new View();
+        $this->model = new Model_main();
+
+    }
+
+    public function action_index($param = NULL)
+    {
+        $data = $this->model->get_data();
+        $this->view->generate('main_view.php', 'template_view.php', $data);
+    }
 }
