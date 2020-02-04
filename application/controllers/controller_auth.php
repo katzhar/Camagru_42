@@ -3,6 +3,7 @@ class Controller_Auth extends Controller {
 	private static $auth_page = 'auth_view.php'; 
     private static $main_page = 'main_view.php';
     private static $reset_page = 'reset_view.php';
+    private static $newpassword_page = 'newpassword_view.php';
 	public function __construct() {
 		$this->view = new View();
 		$this->model = new Model_Auth();
@@ -26,9 +27,4 @@ class Controller_Auth extends Controller {
         }
     }
 
-	function action_reset() {
-        $page = $this->model->reset_password();
-        $this->view->generate(Controller_Auth::$reset_page, Controller::$template, Model::SUCCESS);
-        
-	}
 }

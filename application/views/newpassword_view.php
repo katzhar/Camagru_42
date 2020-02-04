@@ -53,15 +53,15 @@
             font-size: 11px;
         }
     </style>
-    	<title>Camagru | Log In</title>
+    	<title>Camagru | New password</title>
     <body>
       <div id="container">
         <div id="one">
             CAMAGRU<br><br>
-            <form method="post" action="/auth/login">
-                <input type="text" name="login" placeholder="login" value="" required="required"><br><br>
-                <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
-       <input type="submit" name="submit" value="Log In"><br><br>
+            <form method="post" action="/auth">
+            <input type="password" name="password_new" placeholder="create new password" value="" required="required"><br><br>
+                <input type="password" name="password_confirm" placeholder="repeat password" value="" required="required"><br><br>
+       <input type="submit" name="submit" value="update"><br><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {
@@ -70,12 +70,12 @@
             unset($_SESSION['message']); 
         ?>
        <div id="two">
-       <a href="/reset">FORGOT PASSWORD?</a><br>
+       <a href="/auth">BACK TO LOGIN</a><br>
       </div>
       </div>
       <br>
     <div id="three">
-        DON'T HAVE AN ACCOUNT? <a href="/signup">SIGN UP</a><br>
+    <a href="/signup">CREATE NEW ACCOUNT</a><br>
     </div>
         </div>
     </body>

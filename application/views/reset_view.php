@@ -58,9 +58,9 @@
       <div id="container">
         <div id="one">
             CAMAGRU<br><br>
-            <form method="post" action="/auth">
+            <form method="post" action="/reset/update">
                 <input type="text" name="email" placeholder="e-mail" value="" required="required"><br><br>
-       <input type="submit" name="submit" value="Send Login Link"><br><br>
+       <input type="submit" name="submit" value="Reset password"><br><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {
