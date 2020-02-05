@@ -61,7 +61,7 @@
             <form method="post" action="/auth/login">
                 <input type="text" name="login" placeholder="login" value="" required="required"><br><br>
                 <input type="password" name="password" placeholder="password" value="" required="required"><br><br>
-       <input type="submit" name="submit" value="Log In"><br><br>
+       <input type="submit" name="submit" value="Log In"><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {

@@ -60,7 +60,7 @@
             CAMAGRU<br><br>
             <form method="post" action="/reset/update">
                 <input type="text" name="email" placeholder="e-mail" value="" required="required"><br><br>
-       <input type="submit" name="submit" value="Reset password"><br><br>
+                <input type="submit" name="submit" value="Reset password"><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {

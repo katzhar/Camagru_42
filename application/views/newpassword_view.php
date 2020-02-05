@@ -58,10 +58,10 @@
       <div id="container">
         <div id="one">
             CAMAGRU<br><br>
-            <form method="post" action="/auth">
-            <input type="password" name="password_new" placeholder="create new password" value="" required="required"><br><br>
+            <form method="post" action="/reset/newpassword">
+                <input type="password" name="password_new" placeholder="create new password" value="" required="required"><br><br>
                 <input type="password" name="password_confirm" placeholder="repeat password" value="" required="required"><br><br>
-       <input type="submit" name="submit" value="update"><br><br>
+       <input type="submit" name="submit" value="update"><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {

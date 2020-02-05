@@ -68,15 +68,13 @@ class Model_Reset extends Model {
 			$stmt->execute($arr);
 			$data = $stmt->fetch();
 			if ($data) {
-				$query = "UPDATE users SET password = 1 WHERE reset_link=?";
+				$query = "UPDATE users SET password=1 WHERE reset_link=?";
 				$stmt = $dbh->prepare($query);
 				$stmt->execute(array($data['reset_link']));
 				$hello = $stmt->fetch();
-                header('location: ../newpassword');
                 $_SESSION['reset_link'] = $reset_link;
                 return Model::SUCCESS;
 			}
-			return Model::ERROR;		
 		}
 		catch (PDOException $err) {
 			$err->getMessage();
@@ -84,33 +82,46 @@ class Model_Reset extends Model {
 		}
 	}
 
-    function update_password() {
-        // include "config/database.php"; 
-		// if ($_POST['password_new'] !== $_POST['password_confirm']) {
-		// 	$_SESSION['message'] = "PASSWORDS DOESN'T MATCH";
-		// 	header('Location: ../newpassword');
-		// 	exit();
-		// }
-		// else if ($_POST['password_new'] === strtolower($_POST['password_new']) or strlen($_POST['password_new']) < 4) {
-		// 	$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 5 CHARACTERS AND 1 UPPERCASE LETTER";
-		// 	header('Location: ../signup');
-		// 	exit();
-		// }
-		// else {
-		// 	try {
-		// 		$dbh = new PDO($dsn, $db_user, $db_password, $options);
-		// 		$dbh->exec('USE camagru_db');
-		// 		$arr = array('reset_link' => $reset_link, 'password' => hash("whirlpool", $password));
-		// 		if ($this->add_info_to_db($dbh, Model_Reset::$update_password, $arr) === Model::SUCCESS) {
-        //             header('Location: ../auth');
-		// 			return Model::SUCCESS;
-		// 		}
-		// 		return Model::ERROR;
-		// 	}
-		// 	catch(PDOxception $err) {
-		// 		$err->getMessage();
-		// 		return Model::ERROR;
-		// 	}
-        }
-    }
-    
+    function update_password($password_new, $password_confirm) {
+		include "config/database.php";
+		$password_new = $_POST['password_new'];
+		$password_confirm = $_POST['password_confirm'];
+		if ($password_new !== $password_confirm) {
+			$_SESSION['message'] = "PASSWORDS DOESN'T MATCH";
+			header('Location: ../reset/newpassword');
+			exit();
+		}
+		else if ($password_new === strtolower($password_new) or strlen($password_new) < 4) {
+			$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 5 CHARACTERS AND 1 UPPERCASE LETTER";
+			header('Location: ../reset/newpassword');
+			exit();
+		}
+		else {
+			try {
+				$reset_link = $_SESSION['reset_link'];
+				$password_new = $_POST['password_new'];
+				$dbh = new PDO($dsn, $db_user, $db_password, $options);
+				$dbh->exec('USE camagru_db');
+				$query = "SELECT * FROM users WHERE reset_link = ?";
+				$arr = array($reset_link);
+				$stmt = $dbh->prepare($query);
+				$stmt->execute($arr);
+				$data = $stmt->fetch();
+				if ($data) {
+					$query = "UPDATE users SET password=:password WHERE reset_link=:reset_link";
+					$stmt = $dbh->prepare($query);
+					$stmt->execute(array('reset_link' => $reset_link, 'password' => hash('whirlpool', $password_new)));
+					$hello = $stmt->fetch();
+					$_SESSION['message'] = "YOUR PASSWORD HAS BEEN CHANGED SUCCESSFULLY";
+					header('location: ../auth');
+					exit();
+					return Model::SUCCESS;
+				}	
+			}		
+			catch(PDOxception $err) {
+				$err->getMessage();
+				return Model::ERROR;
+			}
+		}
+	}
+}
