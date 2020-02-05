@@ -8,7 +8,7 @@ class Controller_Signup extends Controller {
 	}
 	
 	function action_index($param = null) {	
-		$this->view->generate(Controller_Signup::$signup_page, Controller::$template, $param);
+		$this->view->generate(Controller_Signup::$signup_page, Controller_Signup::$signup_page, $param);
 	}
 
 	function action_create() {

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
     <html lang="en">
     <style>
+    	body {
+            font-family: Arial;
+            padding: 10px;
+            background: #f1f1f1;
+  	    }
         div {
             border-radius: 3px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -28,7 +33,7 @@
             color: rgb(82, 82, 82);
             height: 80%;
             width: 20%;
-            background: linear-gradient(20deg, #f9e6ff, #e6f9ff);
+            background: linear-gradient(20deg, #c2c2d6, #e6f9ff);
             padding: 1%;
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         }
@@ -41,7 +46,7 @@
             color: rgb(82, 82, 82);
             height: 20%;
             width: 20%;
-            background: linear-gradient(20deg, #f9e6ff, #e6f9ff);
+            background: linear-gradient(20deg, #c2c2d6, #e6f9ff);
             padding: 1%;
             box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         }
@@ -56,8 +61,7 @@
     	<title>Camagru | Reset password</title>
     <body>
       <div id="container">
-        <div id="one">
-            CAMAGRU<br><br>
+        <div id="one"><a href="/main">CAMAGRU</a><br><br>
             <form method="post" action="/reset/update">
                 <input type="text" name="email" placeholder="e-mail" value="" required="required"><br><br>
                 <input type="submit" name="submit" value="Reset password"><br>

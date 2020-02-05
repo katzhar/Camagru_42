@@ -13,16 +13,18 @@ class Model_Auth extends Model {
 			$stmt = $dbh->prepare(Model_Auth::$check_data);
 			$stmt->execute($arr);
 			$data = $stmt->fetch();
-			if (!$data) {
+			if ($data) {
+				$_SESSION['login'] = $data['login'];
+				$_SESSION['password'] = $data['password'];
+				header ('Location: ../main');
+				exit();
+				return Model::SUCCESS;
+			}
+			else {
 				$_SESSION['message'] = 'INCORRECT LOGIN OR PASSWORD';
 				header('Location: ../auth');
 				exit();
-			}
-			else {
-				$_SESSION['login'] = $data['login'];
-				$_SESSION['password'] = $data['password'];
-				header('location: ../main');
-				return Model::SUCCESS;	
+				return Model::ERROR;
 			}
 		}
 		catch (PDOException $err) {

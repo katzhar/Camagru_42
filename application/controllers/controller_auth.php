@@ -10,7 +10,7 @@ class Controller_Auth extends Controller {
 	}
 	
 	function action_index($param = null) {	
-		$this->view->generate(Controller_Auth::$auth_page, Controller::$template, $param);
+		$this->view->generate(Controller_Auth::$auth_page, Controller_Auth::$auth_page, $param);
     }
     
     function action_login() {
@@ -27,4 +27,9 @@ class Controller_Auth extends Controller {
         }
     }
 
+    function action_signout() {
+        session_destroy();
+        header("Location: /main/");
+        exit();
+    }
 }

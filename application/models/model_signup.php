@@ -63,7 +63,9 @@ class Model_Signup extends Model {
 		$header 	= "From: info@camagru.com";
 					"CC: info@camagru.com";
 		if (mail($email, $subject, $body, $header)) {
+			$_SESSION['message'] = "WE SEND A VERIFICATION LINK TO YOUR E-MAIL, PLEASE CHECK IT";
 			header('location: ../auth');
+			exit();
 			return Model::SUCCESS;
 		}
 		return Model::ERROR;

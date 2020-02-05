@@ -16,12 +16,12 @@ class Controller_Reset extends Controller {
 
     function action_update() {
         $page = $this->model->reset_password($_POST['email']); 
-		$this->view->generate(Controller_Reset::$reset_page, Controller::$template, Model::SUCCESS);
+		$this->view->generate(Controller_Reset::$reset_page, Controller_Reset::$reset_page, Model::SUCCESS);
     }
 
     function action_confirm() {
         $page = $this->model->set_reset_link();
-        $this->view->generate(Controller_Reset::$newpassword_page, Controller::$template, Model::SUCCESS);
+        $this->view->generate(Controller_Reset::$newpassword_page, Controller_Reset::$newpassword_page, Model::SUCCESS);
     }
     
     function action_newpassword() {
