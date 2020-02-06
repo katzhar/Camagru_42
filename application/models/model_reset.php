@@ -68,7 +68,7 @@ class Model_Reset extends Model {
 			$stmt->execute($arr);
 			$data = $stmt->fetch();
 			if ($data) {
-				$query = "UPDATE users SET password=1 WHERE reset_link=?";
+				$query = "UPDATE users SET password=NULL WHERE reset_link=?";
 				$stmt = $dbh->prepare($query);
 				$stmt->execute(array($data['reset_link']));
 				$hello = $stmt->fetch();

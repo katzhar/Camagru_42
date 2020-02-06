@@ -11,7 +11,7 @@ class Controller_Reset extends Controller {
 	}
 
     function action_index($param = null) {	
-		$this->view->generate(Controller_Reset::$reset_page, Controller::$template, $param);
+		$this->view->generate(Controller_Reset::$reset_page, Controller_Reset::$reset_page, $param);
     }
 
     function action_update() {

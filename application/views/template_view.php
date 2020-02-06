@@ -10,7 +10,7 @@
 		box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);
 	}
 	body {
-		font-family: Arial;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 		padding: 10px;
 		background: #f1f1f1;
   	}

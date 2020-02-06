@@ -9,7 +9,7 @@ try {
                 (id INT NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT, 
                 `e-mail` VARCHAR(255) NOT NULL, 
                 `login` VARCHAR(255) NOT NULL, 
-                `password` VARCHAR(255) NOT NULL,
+                `password` VARCHAR(255) DEFAULT NULL,
                 `unique_link` VARCHAR(255) DEFAULT NULL,
                 `reset_link` VARCHAR(255) DEFAULT NULL,
                 `verified` INT NOT NULL DEFAULT '0')";
