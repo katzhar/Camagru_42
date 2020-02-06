@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="shortcut icon" href="/images/logo.png" type="image/png">
 	<meta charset="utf-8">
-	<style>
-	header {
-		background-color: rgb(82, 82, 82);
-		color: white;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-		padding-left: 5px;
-		height: 20px;
-		width: 100%;
-	}
-</style>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <a href="/main"><header>CAMAGRU</header></a>
 <body>

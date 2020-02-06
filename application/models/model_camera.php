@@ -8,18 +8,21 @@ public function upload_image_base()
     if (!isset($_POST['base_img']))
         return ('no_image');
     else {
+        $sticker = $_POST['sent_sticker'];
+        $sticker = explode('_', $sticker);
+        $sticker[2] = intval($sticker[2]);
+        $sticker[3] = intval($sticker[3]);
         $data = explode(',' , $_POST['base_img']);
         $img = imagecreatefromstring(base64_decode($data[1])); //переводим из base64 в изображение
         if ($img === false)
             return 'no_image';
         $image_name = hash('crc32', rand()) . '.jpg'; //хешируем название
-        $src = imagecreatefrompng('images/2.png');
+        $src = imagecreatefrompng('images/'.$sticker[1].'.png');
         imagesavealpha($src, true); //сохраняем альфа канал у стикера
-
         $img = imagescale($img, 640, 480); //ставим размер изображения
-        $src = imagescale($src, 150, 150);
+        $src = imagescale($src, 180, 180);
 // объединение изображений
-        imagecopy($img, $src, 400, 250, 0, 0, imagesx($src), imagesy($src));
+        imagecopy($img, $src, $sticker[2], $sticker[3], 0, 0, imagesx($src), imagesy($src));
 // сохраняем изображение в папку
         imagejpeg($img,  "images/user_image/$image_name");
         //чистим память
@@ -52,7 +55,7 @@ public function upload_image_base()
         $type = explode('/',$_FILES['picture']['type']);
 
 // Максимальный размер файла
-        $size = 1024000;
+        $size = 100240000;
 // Обработка запроса
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Проверяем тип файла
