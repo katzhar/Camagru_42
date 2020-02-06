@@ -1,8 +1,8 @@
 <!DOCTYPE html>
     <html lang="en">
     <style>
-    	body {
-            font-family: Arial;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             padding: 10px;
             background: #f1f1f1;
   	    }
@@ -58,13 +58,14 @@
             font-size: 11px;
         }
     </style>
-    	<title>Camagru | Reset password</title>
+    	<title>Camagru | New password</title>
     <body>
       <div id="container">
         <div id="one"><a href="/main">CAMAGRU</a><br><br>
-            <form method="post" action="/reset/update">
-                <input type="text" name="email" placeholder="e-mail" value="" required="required"><br><br>
-                <input type="submit" name="submit" value="Reset password"><br>
+            <form method="post" action="/reset/newpassword">
+                <input type="password" name="password_new" placeholder="create new password" value="" required="required"><br><br>
+                <input type="password" name="password_confirm" placeholder="repeat password" value="" required="required"><br><br>
+                <input type="submit" name="submit" value="update"><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {
