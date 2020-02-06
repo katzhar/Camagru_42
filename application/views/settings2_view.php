@@ -19,13 +19,15 @@
         width: 50%;
 }
 #right {
-        padding-top: 80px;
+        padding-top: 82px;
         font-size: 12px;
 }
 .clear {
         clear: both;
 }
-
+#a {
+        color: red;
+}
 </style>
 </head>
 <body>
@@ -33,14 +35,16 @@
   <div id="container_2">
     <div id="left">
     <p style="font-weight: bold"><a href="../settings">Settings</a><p><br>
-    <p><a href="../settings/editprofile">Edit profile</a><p>
-    <p><a href="../settings/changepassword">Change password</a><p>
+    <h5><a href="../settings">Edit profile</a></h5>
+    <h4><a href="../settings/changepassword">Change password</a></h4>
     </div>
     <div id="right">
     <form method="post" action="/settings/changepassword">
-               old password <input type="password" name="password_old"  value="" required="required"><br><br>
-               new password <input type="password" name="password_new"  value="" required="required"><br><br>
+               old password <input type="password" name="password_old" value="" required="required"><br><br>
+               new password <input type="password" name="password_new" value="" required="required"><br><br>
                confirm password <input type="password" name="password_confirm"  value="" required="required"><br><br>
+               <input type="submit" name="submit" value="change password"><br><br>
+               <a id="a" href="../reset">forgot password?</a><br><br>
         </form>
     </div>
     <div class="clear"></div>
