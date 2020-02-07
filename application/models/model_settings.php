@@ -9,16 +9,14 @@ class Model_Settings extends Model {
             $dbh = new PDO($dsn, $db_user, $db_password, $options);
             $dbh->exec('USE camagru_db');
             $arr = array($login);
-            $get_email = "SELECT `e-mail` FROM users WHERE login=?";
-            $stmt = $dbh->prepare($get_email);
+            $sql_get_email = "SELECT `e-mail` FROM users WHERE login=?";
+            $stmt = $dbh->prepare($sql_get_email);
             $stmt->execute($arr);
             $data = $stmt->fetch();
             $_SESSION['email'] = $data['e-mail'];
-            return Model::SUCCESS;
         }
         catch (PDOException $err) {
             $err->getMessage();
-            return Model::ERROR;
         }
     }
 
@@ -44,27 +42,20 @@ class Model_Settings extends Model {
         try {
             $dbh = new PDO($dsn, $db_user, $db_password, $options);
             $dbh->exec('USE camagru_db');
-            $query = "SELECT * FROM users WHERE login=?";
+            $sql_getlog = "SELECT * FROM users WHERE login=?";
             $arr = array($login);
-            $stmt = $dbh->prepare($query);
-            $stmt->execute($arr);
-            $data = $stmt->fetch();
-            if ($data) {
-                $query = "UPDATE users SET login=? WHERE login=?";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute(array($login_new, $login));
-                $hello = $stmt->fetch();
+            if ($this->add_info_to_db($dbh, $sql_getlog, $arr) === Model::SUCCESS) {
+                $sql_updlog = "UPDATE users SET login=? WHERE login=?";
+                $arr = array($login_new, $login);
+                $this->add_info_to_db($dbh, $sql_updlog, $arr);
                 $_SESSION['login'] = $login_new;
                 $_SESSION['message'] = "YOUR USERNAME HAS BEEN CHANGED SUCCESSFULLY";
                 header('location: ../settings');
                 exit();
-                return Model::SUCCESS;
-            }
-            return Model::ERROR;		
+            }	
         }
         catch (PDOException $err) {
             $err->getMessage();
-            return Model::ERROR;
         }
     }
 
@@ -86,19 +77,17 @@ class Model_Settings extends Model {
             try {
                 $dbh = new PDO($dsn, $db_user, $db_password, $options);
                 $dbh->exec('USE camagru_db');
-                $query = "UPDATE users SET `e-mail`=? WHERE `e-mail`=?";
-                $stmt = $dbh->prepare($query);
-                $stmt->execute(array($email_new, $email));
-                $data = $stmt->fetch();
-                $_SESSION['email'] = $email_new;
-                $_SESSION['message'] = "YOUR E-MAIL HAS BEEN CHANGED SUCCESSFULLY";
-                header('location: ../settings/changeemail');
-                exit();
-                return Model::SUCCESS;
+                $sql_updemail = "UPDATE users SET `e-mail`=? WHERE `e-mail`=?";
+                $arr = array($email_new, $email);
+                if ($this->add_info_to_db($dbh, $sql_updemail, $arr) === Model::SUCCESS) {
+                    $_SESSION['email'] = $email_new;
+                    $_SESSION['message'] = "YOUR E-MAIL HAS BEEN CHANGED SUCCESSFULLY";
+                    header('location: ../settings/changeemail');
+                    exit();
+                }
             }
             catch (PDOException $err) {
                 $err->getMessage();
-                return Model::ERROR;
             }
         }
     }
@@ -144,12 +133,10 @@ class Model_Settings extends Model {
                     $_SESSION['message'] = "YOUR PASSWORD HAS BEEN CHANGED SUCCESSFULLY";
                     header('location: ../settings/changepassword');
                     exit();
-                    return Model::SUCCESS;    
                 }
             }
             catch (PDOException $err) {
             $err->getMessage();
-            return Model::ERROR;	
             }
         }
     }

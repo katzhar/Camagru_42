@@ -3,6 +3,23 @@ session_start();
 class Model_Signup extends Model {
 	private static $fill_db = "INSERT INTO users (`e-mail`, `login`, `password`, `unique_link`) VALUES (:email, :login, :password, :unique_link)";
 
+// 	public function check_email() {
+// 		include "config/database.php";
+// 		$dbh = new PDO($dsn, $db_user, $db_password, $options);
+// 		$dbh->exec('USE camagru_db');
+// 		$sql_checkemail = "SELECT `e-mail` FROM users WHERE `email`=?";
+// 		$arr = array($login);
+// 			if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) {
+// 				$this->verification_email($email, $login, $unique_link);
+// 				return Model::SUCCESS;
+// 			}
+// 		catch(PDOxception $err) {
+// 			$err->getMessage();
+// 			return Model::ERROR;
+// 		}
+// 	}
+// }
+
 	public function create_acc($email, $login, $password, $password_confirm) {
 		include "config/database.php";
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -35,40 +52,12 @@ class Model_Signup extends Model {
 					$this->verification_email($email, $login, $unique_link);
 					return Model::SUCCESS;
 				}
-				return Model::ERROR;
 			}
 			catch(PDOxception $err) {
 				$err->getMessage();
 				return Model::ERROR;
 			}
 		}
-	}
-
-	private function add_info_to_db($dbh, $sql, $arr) {
-		try {
-			$stmt = $dbh->prepare($sql);
-			$stmt->execute($arr);
-			return Model::SUCCESS;
-		}
-		catch (PDOException $err) {
-			$err->getMessage();
-			return Model::ERROR;	
-		}
-	}
-
-	function verification_email($email, $login, $unique_link) {
-		include "config/database.php";
-		$subject 	= "Please verify your email address";
-		$body 		= "Hi, " . $login . "!" . "\r\n" . "Please verify your email address so we know that it's really you:" . "\r\n" . "http://" . $host . "/signup/confirm/unique_link?" . $unique_link . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
-		$header 	= "From: info@camagru.com";
-					"CC: info@camagru.com";
-		if (mail($email, $subject, $body, $header)) {
-			$_SESSION['message'] = "WE SEND A VERIFICATION LINK TO YOUR E-MAIL, PLEASE CHECK IT";
-			header('location: ../auth');
-			exit();
-			return Model::SUCCESS;
-		}
-		return Model::ERROR;
 	}
 
 	function confirm_user() {
@@ -97,5 +86,32 @@ class Model_Signup extends Model {
 			$err->getMessage();
 			return Model::ERROR;
 		}
+	}
+
+	private function add_info_to_db($dbh, $sql, $arr) {
+		try {
+			$stmt = $dbh->prepare($sql);
+			$stmt->execute($arr);
+			return Model::SUCCESS;
+		}
+		catch (PDOException $err) {
+			$err->getMessage();
+			return Model::ERROR;	
+		}
+	}
+
+	function verification_email($email, $login, $unique_link) {
+		include "config/database.php";
+		$subject 	= "Please verify your email address";
+		$body 		= "Hi, " . $login . "!" . "\r\n" . "Please verify your email address so we know that it's really you:" . "\r\n" . "http://" . $host . "/signup/confirm/unique_link?" . $unique_link . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
+		$header 	= "From: info@camagru.com";
+					"CC: info@camagru.com";
+		if (mail($email, $subject, $body, $header)) {
+			$_SESSION['message'] = "WE SEND A VERIFICATION LINK TO YOUR E-MAIL, PLEASE CHECK IT";
+			header('location: ../auth');
+			exit();
+			return Model::SUCCESS;
+		}
+		return Model::ERROR;
 	}
 }

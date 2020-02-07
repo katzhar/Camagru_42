@@ -1,7 +1,7 @@
 <?php
 session_start();
 class Model_Auth extends Model {
-	private static $check_data = "SELECT * FROM users WHERE login = ? AND password = ?";
+	private static $check_data = "SELECT * FROM users WHERE login=? AND password=?";
 
     public function check_user($login, $password) {
 		include "config/database.php";
