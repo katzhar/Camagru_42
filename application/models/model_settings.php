@@ -127,7 +127,7 @@ class Model_Settings extends Model {
                 $arr = array($login);
                 if ($this->add_info_to_db($dbh, $sql_getlog, $arr) === Model::SUCCESS) {
                     $sql_getpas = "UPDATE users SET password=? WHERE `login`=?";
-                    $arr = array($password, $login);
+                    $arr = array($password_new, $login);
                     $this->add_info_to_db($dbh, $sql_getpas, $arr);
                     $_SESSION['password'] = $password_new;
                     $_SESSION['message'] = "YOUR PASSWORD HAS BEEN CHANGED SUCCESSFULLY";

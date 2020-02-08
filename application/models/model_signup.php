@@ -3,27 +3,34 @@ session_start();
 class Model_Signup extends Model {
 	private static $fill_db = "INSERT INTO users (`e-mail`, `login`, `password`, `unique_link`) VALUES (:email, :login, :password, :unique_link)";
 
-// 	public function check_email() {
-// 		include "config/database.php";
-// 		$dbh = new PDO($dsn, $db_user, $db_password, $options);
-// 		$dbh->exec('USE camagru_db');
-// 		$sql_checkemail = "SELECT `e-mail` FROM users WHERE `email`=?";
-// 		$arr = array($login);
-// 			if ($this->add_info_to_db($dbh, Model_Signup::$fill_db, $arr) === Model::SUCCESS) {
-// 				$this->verification_email($email, $login, $unique_link);
-// 				return Model::SUCCESS;
-// 			}
-// 		catch(PDOxception $err) {
-// 			$err->getMessage();
-// 			return Model::ERROR;
-// 		}
-// 	}
-// }
+	function check_email($email) {
+		include "config/database.php";
+		try {
+			$dbh = new PDO($dsn, $db_user, $db_password, $options);
+			$dbh->exec('USE camagru_db');
+			$sql_checkemail = "SELECT COUNT(*) FROM users WHERE `e-mail`=?";
+			$stmt = $dbh->prepare($sql_checkemail);
+			$stmt->execute(array($email));
+			$data = $stmt->fetch();
+			if ($data === 0) {
+					return Model::SUCCESS;
+				}
+			}
+			catch(PDOxception $err) {
+				$err->getMessage();
+				return Model::ERROR;
+			}
+	}
 
 	public function create_acc($email, $login, $password, $password_confirm) {
 		include "config/database.php";
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$_SESSION['message'] = "INVALID E-MAIL";
+			header('Location: ../signup');
+			exit();
+		}
+		else if ($this->check_email($email) === Model::ERROR) {
+			$_SESSION['message'] = "THIS E-MAIL ALREADY EXISTS";
 			header('Location: ../signup');
 			exit();
 		}
