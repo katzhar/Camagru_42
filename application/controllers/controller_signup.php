@@ -2,6 +2,7 @@
 class Controller_Signup extends Controller {
 	private static $signup_page = 'signup_view.php'; 
 	private static $auth_page = 'auth_view.php';
+	
 	public function __construct() {
 		$this->view = new View();
 		$this->model = new Model_Signup();

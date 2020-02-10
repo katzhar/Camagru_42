@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <style> 
@@ -10,5 +9,6 @@
     }
 </style>
 </head>
-<h1>Camagru | 404</h1>
+<title>Camagru | 404<title>
+<h1>ERROR 404 PAGE NOT FOUND</h1>
 </html>

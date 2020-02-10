@@ -5,22 +5,39 @@ class Model_Signup extends Model {
 
 	function check_email($email) {
 		include "config/database.php";
-		try {
-			$dbh = new PDO($dsn, $db_user, $db_password, $options);
-			$dbh->exec('USE camagru_db');
-			$sql_checkemail = "SELECT COUNT(*) FROM users WHERE `e-mail`=?";
-			$stmt = $dbh->prepare($sql_checkemail);
-			$stmt->execute(array($email));
-			$data = $stmt->fetch();
-			if ($data === 0) {
-					return Model::SUCCESS;
-				}
-			}
-			catch(PDOxception $err) {
-				$err->getMessage();
+		$dbh = new PDO($dsn, $db_user, $db_password, $options);
+		$dbh->exec('USE camagru_db');
+		$sql_checkemail = "SELECT COUNT(*) FROM users WHERE `e-mail`=?";
+		$stmt = $dbh->prepare($sql_checkemail);
+		$stmt->execute(array($email));
+		$data = $stmt->fetch();
+		$count = count($data);
+		foreach ($data as $value) {
+			if ($value === 0) {
+				return Model::SUCCESS;
+		}
+			else 
 				return Model::ERROR;
-			}
+		}
 	}
+
+	function check_login($login) {
+		include "config/database.php";
+		$dbh = new PDO($dsn, $db_user, $db_password, $options);
+		$dbh->exec('USE camagru_db');
+		$sql_checklogin = "SELECT COUNT(*) FROM users WHERE `login`=?";
+		$stmt = $dbh->prepare($sql_checklogin);
+		$stmt->execute(array($login));
+		$data = $stmt->fetch();
+		$count = count($data);
+		foreach ($data as $value) {
+			if ($value === 0) {
+				return Model::SUCCESS;
+		}
+			else 
+				return Model::ERROR;
+		}
+	}	
 
 	public function create_acc($email, $login, $password, $password_confirm) {
 		include "config/database.php";
@@ -31,6 +48,11 @@ class Model_Signup extends Model {
 		}
 		else if ($this->check_email($email) === Model::ERROR) {
 			$_SESSION['message'] = "THIS E-MAIL ALREADY EXISTS";
+			header('Location: ../signup');
+			exit();
+		}
+		else if ($this->check_login($login) === Model::ERROR) {
+			$_SESSION['message'] = "THIS USERNAME IS ALREADY IN USE";
 			header('Location: ../signup');
 			exit();
 		}

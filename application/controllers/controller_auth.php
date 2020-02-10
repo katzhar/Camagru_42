@@ -4,6 +4,7 @@ class Controller_Auth extends Controller {
     private static $main_page = 'main_view.php';
     private static $reset_page = 'reset_view.php';
     private static $newpassword_page = 'newpassword_view.php';
+    
 	public function __construct() {
 		$this->view = new View();
 		$this->model = new Model_Auth();
