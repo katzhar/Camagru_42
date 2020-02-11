@@ -35,6 +35,10 @@
 </style>
 </head>
 <body>
+<?php
+if (!isset($_SESSION['login']) and !isset($_SESSION['password']))
+        header ('Location: ../main');
+?>
 <div id="container_1">
   <div id="container_2">
     <div id="left">

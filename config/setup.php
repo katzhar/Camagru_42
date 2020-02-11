@@ -1,5 +1,5 @@
 <?php 
-include "database.php";
+include "config/database.php";
 $dbh = new PDO($dsn, $db_user, $db_password, $options);
 $dbh->exec('CREATE DATABASE IF NOT EXISTS camagru_db CHARACTER SET utf8 COLLATE utf8_general_ci');
 $dbh->exec('USE camagru_db');
