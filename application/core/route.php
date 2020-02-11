@@ -3,6 +3,7 @@ class Route {
 	static function start() {
 		$controller_name = 'Main';
 		$action_name = 'index';
+		$param = 0;
 		
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
 
@@ -14,6 +15,10 @@ class Route {
 			$action_name = $routes[2];
 		}
 
+		if (!empty($routes[3])){
+		    $param = $routes[3];
+        }
+        
 		$model_name = 'Model_'.$controller_name;
 		$controller_name = 'Controller_'.$controller_name;
 		$action_name = 'action_'.$action_name;
@@ -52,7 +57,7 @@ class Route {
 		
 		if(method_exists($controller, $action)) {
 			// вызываем действие контроллера
-			$controller->$action();
+			$controller->$action($param);
 		}
 		// else {
 		// 	// здесь также разумнее было бы кинуть исключение
