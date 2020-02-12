@@ -1,35 +1,7 @@
+<html>
 <head>
     <title>Camagru | Settings</title>
-<head>
-<style>
-#container_1 {
-        width: 35%;
-}
-#container_2 {
-        margin-left: 100%;
-        width: 300%;
-}
-#left {
-        float: left;
-        margin-left: -30%;
-        margin-right: -100%;
-        width: 50%;
-}
-#right {
-        padding-top: 82px;
-        font-size: 12px;
-}
-.clear {
-        clear: both;
-}
-#a {
-        color: red;
-}
-#msg {
-            font-weight: bold;
-            color: red;
-}
-</style>
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
 <?php
@@ -38,13 +10,13 @@ if (!isset($_SESSION['login']) and !isset($_SESSION['password']))
 ?>
 <div id="container_1">
   <div id="container_2">
-    <div id="left">
+    <div id="left_column">
     <p style="font-weight: bold"><a href="../settings">Settings</a><p><br>
     <h5><a href="../settings">Change username</a></h5>
     <h5><a href="../settings/changeemail">Change e-mail</a></h5>
     <h4><a href="../settings/changepassword">Change password</a></h4>
     </div>
-        <div id="right">
+        <div id="right_column">
         <form method="post" action="/settings/confirmpassword">
                old password <input type="password" name="password_old" value="" required="required"><br><br>
                new password <input type="password" name="password_new" value="" required="required"><br><br>

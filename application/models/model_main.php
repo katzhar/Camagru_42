@@ -44,11 +44,10 @@ class Model_main extends Model {
     public function change_likes($param) {
         require_once "config/database.php";
         if (isset($_SESSION['login'])) {
-            $login = $_SESSION['login'];
             $value = explode('_', $param);
             $pdo = new PDO($dsn, $db_user, $db_password, $options);
             $pdo->exec('USE camagru_db');
-            if($value[1] === 'like') {
+            if ($value[1] === 'like') {
                 $sql = 'UPDATE post_img SET `Likes`=`Likes` + 1 WHERE `Post_ID`=?';
                 $sql = $pdo->prepare($sql);
                 $sql->execute(array($value[0]));
@@ -56,12 +55,6 @@ class Model_main extends Model {
                 $sql = $pdo->prepare($sql);
                 $value[1] = $_SESSION['id'];
                 $sql->execute($value);
-                $sql = "SELECT 'e-mail' FROM users WHERE `login`=?";
-				$stmt->execute(array($login));
-                $hello = $stmt->fetch();
-                $email = $hello['e-mail'];
-                echo $email;
-                $this->notification_email($email);
             }
             else {
                 $sql = 'UPDATE post_img SET `Likes`=`Likes` - 1 WHERE `Post_ID`=?';
@@ -75,26 +68,55 @@ class Model_main extends Model {
         }
     }
 
-    public function change_comments($param) {
+    public function change_comments($message) {
         require_once "config/database.php";
         if (isset($_SESSION['login'])) {
-            $value = explode('_', $param);
-            $pdo = new PDO($dsn, $db_user, $db_password, $options);
-            $pdo->exec('USE camagru_db');
-            $sql = 'SELECT * FROM comments post_img SET `Likes` = `Likes` + 1 WHERE `Login` = ?';
-            $sql = $pdo->prepare($sql);
-            $sql->execute(array($value[0]));
-            $sql = 'INSERT INTO `comments` (`Post_ID`, `Login`, `Comment`) VALUES (?, ?, ?)';
             $login = $_SESSION['login'];
-            $sth = $pdo->prepare($sql);
-            $sth->execute(array($value[0], $login, $value[1]));
+            $id = $_SESSION['id'];
+            $comment = $_POST['message'];
+            $dbh = new PDO($dsn, $db_user, $db_password, $options);
+            $dbh->exec('USE camagru_db');
+            $sql = 'INSERT INTO comments (`Login`, `Post_ID`, `Comment`) VALUES (?, ?, ?)';
+            $arr = array($login, $id, $comment);
+            if ($this->add_info_to_db($dbh, $sql, $arr) === Model::SUCCESS) {
+                $sql = "SELECT `User_ID` FROM `post_img` WHERE `Post_ID`=?";
+                $arr = array($id);
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute($arr);
+                $data = $stmt->fetch();
+                if ($data) {
+                    $user_id = $data['User_ID'];
+                    $sql = "SELECT `e-mail` FROM `users` WHERE `User_ID`=?";
+                    $arr = array($id);
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute($arr);
+                    $data = $stmt->fetch();
+                    if ($data) {
+                        $email = $data['e-mail'];
+                        $this->notification_email($email, $login);
+                        header ('Location: ../main');
+                    }
+                }
+            }
         }
     }
 
-    public function notification_email($email) {
+	private function add_info_to_db($dbh, $sql, $arr) {
+		try {
+			$stmt = $dbh->prepare($sql);
+			$stmt->execute($arr);
+			return Model::SUCCESS;
+		}
+		catch (PDOException $err) {
+			$err->getMessage();
+			return Model::ERROR;	
+		}
+	}
+
+    public function notification_email($email, $login) {
 		include "config/database.php";
-		$subject 	= "Checkout the latest actions in your pofile";
-		$body 		= "Hi, " . $login . "!" . "\r\n" . "Checkout the latest actions in your pofile!" . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
+		$subject 	= "Someone comments on your picture!";
+		$body 		= "Hi, " . $login . "!" . "\r\n" . "Checkout the latest actions in your profile!" . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
 		$header 	= "From: notification@camagru.com";
 					"CC: notification@camagru.com";
 		if (mail($email, $subject, $body, $header)) 

@@ -11,7 +11,7 @@ class Controller_Main extends Controller {
     public function action_likes($param = NULL) {
          $this->model->change_likes($param);
     }
-    public function action_comments($param = NULL) {
-        $this->model->change_comments($param);
+    public function action_comments() {
+        $this->model->change_comments($_POST['message']);
     }
 }

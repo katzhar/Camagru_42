@@ -45,9 +45,9 @@ catch(PDOException $err) {
 
 try {
         $comments_table = "CREATE TABLE IF NOT EXISTS comments
-                (`Login` INT UNSIGNED NOT NULL,
-                `Post_ID` INT UNSIGNED NOT NULL,
-                `Comment` VARCHAR(128))";
+                (`Login` VARCHAR(255) NOT NULL,
+                `Post_ID` INT UNSIGNED DEFAULT NULL,
+                `Comment` VARCHAR(255))";
         $dbh->exec($comments_table);
 }
 catch(PDOException $err) {

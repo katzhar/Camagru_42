@@ -10,7 +10,6 @@
 <script src = '/js/main.js'></script>
 ​
 <?php
-
 $postlike = false;
     if (isset($data['like_post']) && $data['like_post'] != NULL) {
         $like = $data['like_post'];
@@ -66,14 +65,14 @@ UNLIKES;
         echo <<<COMMENT
 <div id="parentElement">
   <span id="childElement">Comments</span>
-  <input id = 'user_id' value = '{$id}'style="display: none">
+  <input id='user_id' value = '{$id}'style="display:none">
 </div>
-​
-<div class="comments_{$value['Post_ID']}"
-<form method='post' value='' action="/main/comments/" name="formname" target="_parent">
-<textarea id="comments_{$value['Post_ID']}" value = '' class = 'comments' name="message">Add a comment...</textarea>
-<input  class = 'comments' onclick="getComment({$value['Post_ID']})" name="submit" type="submit" value="Post">
-</form></div>
+    <div class="comments_{$value['Post_ID']}">
+        <form method="post" action="/main/comments">
+            <input type="text" id="comments_{$value['Post_ID']}" class="comments" name="message" placeholder="Add a comment..." required="required">
+            <input type="submit" name="submit" value="send">
+        </form>
+</div>
 </div>
 <br>
 COMMENT;
