@@ -1,25 +1,83 @@
 <script src="/js/camera.js"></script>
+<style>
+    #test{
+        display: flex;
+        flex-direction: row;
+    }
+    #prew_img  {
+        display: flex;
+        flex-direction: row;
+    }
+    #prew_img  img{
+        width: 180px;
+        height: 135px;
+    }
+#preview{
+    display: inline-block;
+    width: 640px;
+    height: 50px;
+}
+
+</style>
+<?php
+if (isset($_SESSION['message'])) {
+    echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
+}
+unset($_SESSION['message']);
+?>
 <form id="upload_form" enctype="multipart/form-data" action="/camera/upload/" method="post">
     <input id=" before" name="picture" type="file" />
     <input type="submit" value="Загрузить" />
-    </form>
-<!--<form id="upload_camera" enctype="multipart/form-data"  method="post">-->
+</form>
+<div id = "test">
 <video id="video" width="640" height="480" autoplay></video>
-    <button id="snap" type="submit" >Snap Photo</button>
-<div id="stickers">
-    <label><input type="radio" onclick="checkClick('_1')" name="k"><img id = "_1" width="180px" height="180px" src="/images/1.png"></label>
-    <label><input type="radio" onclick="checkClick('_2')"  name="k"><img id = "_2" width="180px" height="180px" src="/images/2.png"></label>
-    <label><input type="radio" onclick="checkClick('_3')"  name="k"><img id = "_3" width="180px" height="180px" src="/images/3.png"></label>
-    <label><input type="radio" onclick="checkClick('_4')"  name="k"><img id = "_4" width="180px" height="180px" src="/images/4.png"></label>
-    <label><input type="radio" onclick="checkClick('_5')"  name="k"><img id = "_5" width="180px" height="180px" src="/images/5.png"></label>
-    <hr>
+    <div id="stickers">
+        <label><input type="radio" onclick="checkClick('_1')" name="k"><img id = "_1" width="180px" height="180px" src="/images/1.png"></label>
+        <label><input type="radio" onclick="checkClick('_2')"  name="k"><img id = "_2" width="180px" height="180px" src="/images/2.png"></label>
+        <label><input type="radio" onclick="checkClick('_3')"  name="k"><img id = "_3" width="180px" height="180px" src="/images/3.png"></label>
+        <label><input type="radio" onclick="checkClick('_4')"  name="k"><img id = "_4" width="180px" height="180px" src="/images/4.png"></label>
+        <label><input type="radio" onclick="checkClick('_5')"  name="k"><img id = "_5" width="180px" height="180px" src="/images/5.png"></label>
+    </div>
 </div>
-<canvas id="canvas" width="640" height="480"></canvas>
+<button id="preview" type="submit"  style = 'display: none'>Snap Photo</button>
+<p>Preview</p>
+ <div id = "prew_img">
+     <?php
+     foreach ($data as $value){
+         echo <<< IMGTMP
+<img id = "{$value['id']}" onclick="getPostImg({$value['id']})" src="/images/user_image/{$value['Image']} ">
+IMGTMP;
+     }
+     ?>
+</div>
+<hr>
 <div id="side_menu">
-    <div id="description" style="text-align: center">Description<br><input type="text" form="upload_form" maxlength="250" name="description"></div>
-    <input style="display: none" id="submit" type="submit" form="upload_form">
-    <button id="bsubmit" style="display: none" onclick="submit();" id="buba">SEND IMAGE</button>
+    <?php
+    if(!isset($_SESSION['user_file']) ||$_SESSION['user_file'] === '' )
+    {
+    echo <<<IMG
+        <img id = 'image_done' width="640" height="480" src = '' style="display: none">
+        <p>Description</p><br>
+        <textarea  type="text" id="description" form="upload_form" maxlength="250" name="description"></textarea></div>
+        <button id="snap" style="display: none"  type="submit" >SEND IMAGE</button>
+        </div>
+        <input style="display: none" id="submit" type="submit" form="upload_form">
+        <canvas id="hide_canv" style="display: none" width="640" height="480"></canvas>
+IMG;
+    }
+    else {
+        echo <<<IMG
+        <img id = 'image_done' width="640" height="480" src = '{$_SESSION['user_file']}'>
+        <p>Description</p><br>
+        <textarea  type="text" id="description" form="upload_form" maxlength="250" name="description"></textarea></div>
+<button id="snap" type="submit" onclick = 'get_post({$_SESSION['id_user_file']})' >SEND IMAGE</button>
 </div>
-</div>
+<input style="display: none" id="submit" type="submit" form="upload_form">
 <canvas id="hide_canv" style="display: none" width="640" height="480"></canvas>
+
+IMG;
+        $_SESSION['user_file'] = '';
+        $_SESSION['id_user_file'] = '';
+    }
+?>
 

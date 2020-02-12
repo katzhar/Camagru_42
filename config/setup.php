@@ -6,7 +6,7 @@ $dbh->exec('USE camagru_db');
 
 try {
         $users_table = "CREATE TABLE IF NOT EXISTS users 
-                (id INT NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT, 
+                (User_ID INT NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT, 
                 `e-mail` VARCHAR(255) NOT NULL, 
                 `login` VARCHAR(255) NOT NULL, 
                 `password` VARCHAR(255) DEFAULT NULL,
@@ -33,23 +33,31 @@ try {
     echo 'ERROR creating table post_img' . $err->getMessage();
 }
 try {
-    $users_table = "CREATE TABLE IF NOT EXISTS likes 
+    $dbh->exec("CREATE TABLE IF NOT EXISTS likes 
                 (`Post_ID` INT UNSIGNED  NOT NULL,
-        `User_ID` INT UNSIGNED NOT NULL)";
-    $dbh->exec($users_table);
+        `User_ID` INT UNSIGNED NOT NULL)");
 }
 catch(PDOException $err) {
-    echo 'ERROR creating table users' . $err->getMessage();
+    echo 'ERROR creating table likes' . $err->getMessage();
 }
 try {
-    $users_table = "CREATE TABLE IF NOT EXISTS comments
-                (`Post_ID` INT UNSIGNED NOT NULL,
-        `User_ID` INT UNSIGNED NOT NULL,
-        `Comment` VARCHAR(128))";
-    $dbh->exec($users_table);
+    $dbh->exec( "CREATE TABLE IF NOT EXISTS comments
+                (id INT NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT,
+                `Post_ID` INT UNSIGNED NOT NULL,
+                `User_ID` INT UNSIGNED NOT NULL,
+                `Comment` VARCHAR(128))");
 }
 catch(PDOException $err) {
-    echo 'ERROR creating table users' . $err->getMessage();
+    echo 'ERROR creating table comments' . $err->getMessage();
+}
+try {
+    $dbh->exec('CREATE TABLE IF NOT EXISTS `tmp_img`
+    (id INT NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT, 
+    `User_file` BIT DEFAULT 0 ,
+    `User_ID` INT UNSIGNED NOT NULL,
+    `Image` VARCHAR(32) NOT NULL)');
+} catch (PDOException $err) {
+    echo 'ERROR creating table tmp_img' . $err->getMessage();
 }
 //try {
 //    $dbh->exec('CREATE TABLE IF NOT EXISTS `comments`

@@ -45,6 +45,7 @@ async function  dislike(post) {
 
 async function getComment(post) {
 comment =  document.getElementById('comments_' + post).value;
+console.log(comment);
     let login = document.getElementById('user_id').value;
     let sp1 = document.createElement("div");
     var sp2 = document.getElementById("childElement");

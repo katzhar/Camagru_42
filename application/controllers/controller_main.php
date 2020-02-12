@@ -1,18 +1,20 @@
 <?php
 class Controller_Main extends Controller {
-    private static $main_page = 'main_view.php'; 
-    public function __construct() {
+    public function __construct()
+    {
         $this->view = new View();
         $this->model = new Model_main();
+
     }
 
-    public function action_index($param = NULL) {
+    public function action_index($param = NULL)
+    {
         $data = $this->model->get_data();
-        $this->view->generate(Controller_Main::$main_page, Controller::$template, $param);
+        $this->view->generate('main_view.php', 'template_view.php', $data);
     }
     public function action_likes($param = NULL)
     {
-         $this->model->change_likes($param);
+        $this->model->change_likes($param);
     }
     public function action_signout($param = NULL)
     {

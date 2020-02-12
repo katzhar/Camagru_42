@@ -67,12 +67,12 @@
                 <input type="password" name="password_confirm" placeholder="repeat your password" value="" required="required"><br><br>
                 <input type="submit" name="submit" value="Sign Up"><br>
        </form>
-       <?php
+            <?php
             if (isset($_SESSION['message'])) {
                 echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
             }
-            unset($_SESSION['message']); 
-        ?>
+            unset($_SESSION['message']);
+            ?>
     </div>
     <br>
         <div id="two">

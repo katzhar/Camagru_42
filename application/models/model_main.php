@@ -22,8 +22,7 @@ class Model_main extends Model
                 $data = $this->get_data_user($data, $userdata, 'like_post');
             else
                 $data['like_post'] = NULL;
-            $sql = 'SELECT *
-        FROM comments';
+            $sql = 'SELECT *FROM comments';
             $sql = $pdo->prepare($sql);
             $comments = $sql->fetchAll();
             if ($comments != NULL)
@@ -80,10 +79,6 @@ class Model_main extends Model
             $value = explode('_', $param);
             $pdo = new PDO($dsn, $db_user, $db_password, $options);
             $pdo->exec('USE camagru_db');
-
-                $sql = 'SELECT * FROM comments  post_img SET `Likes` = `Likes` + 1 WHERE `Post_ID` = ?';
-                $sql = $pdo->prepare($sql);
-                $sql->execute(array($value[0]));
             $sql = 'INSERT INTO `comments` (`Post_ID`,`User_ID`, `Comment`) VALUES (?, ?, ?)';
 
             $id = $_SESSION['login'];
@@ -91,9 +86,6 @@ class Model_main extends Model
             $sth->execute(array($value[0], $id, $value[1]));
         }
     }
-
-
-
 
     public function action_signout(){
         if (isset($_SESSION['login'])) {

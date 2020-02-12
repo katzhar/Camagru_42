@@ -1,22 +1,17 @@
 
-let canvas, context;
 let isVideo = false;
 let elem;
 let t = false;
 let imgs;
 let sentSt;
-
+let sent;
 window.onload = function() {
-    canvas = document.getElementById("canvas");
-    context = canvas.getContext("2d");
     video = document.getElementById('video');
     start_camera();
-    document.getElementById('snap').addEventListener('click', get_foto);
+    document.getElementById('preview').addEventListener('click', get_foto);
 };
 function get_foto() {
     if (!isVideo) alert('Нажмите "разрешить" в верху окна');
-    //  console.log(canvas.toDataURL()); //вывод
-    // Преобразование кадра в изображение dataURL.
     document.getElementById('upload_form').setAttribute('action', '/camera/canvas/');
     let base = video_to_base64();
     let binput = document.createElement('input');
@@ -54,26 +49,25 @@ function start_camera() {
 }
 function delElement(tmp) {
     document.getElementById(tmp.id).remove();
-
+    document.getElementById('preview').style.display = 'none';
 }
+
 function checkClick(id) {
-   t = false;
-     if ( document.getElementById("selectSt" + id) !== null) {
-         t = true;
-         console.log(t);
-            delElement(document.getElementById("selectSt" + id));
-     }
-
-         for (let i = 1; i < 6; i++) {
-             if (document.getElementById("selectSt" + '_' + i) !== null)
-                 delElement(document.getElementById("selectSt" + '_' + i));
-
+    t = false;
+    if ( document.getElementById("selectSt" + id) !== null) {
+        t = true;
+        delElement(document.getElementById("selectSt" + id));
+    }
+    for (let i = 1; i < 6; i++) {
+        if (document.getElementById("selectSt" + '_' + i) !== null)
+            delElement(document.getElementById("selectSt" + '_' + i));
      }
 if (t == false) {
     imgs = new Image(180, 180);
     imgs.id = "selectSt" + id;
     imgs.src = document.getElementById(id).currentSrc;
     dragElement(imgs);
+    document.getElementById('preview').style.display = '';
 }
 }
 
@@ -83,8 +77,8 @@ function dragElement(imgs) {
     document.body.appendChild(elem);
     // 2. разместить на том же месте, но в абсолютных координатах
     elem.style.position = 'absolute';
-    elem.style.left = '232px';
-    elem.style.top = '96px';
+    elem.style.left = '264px';
+    elem.style.top = '269px';
     // переместим в body, чтобы стикер был точно не внутри position:relative
     elem.style.zIndex = 1000; // показывать стикер над другими элементами
     elem.onmousedown = function (e) { // 1. отследить нажатие (https://learn.javascript.ru/drag-and-drop)
@@ -96,14 +90,14 @@ function dragElement(imgs) {
             let eHeight  = e.pageY - elem.offsetHeight / 2;
             console.log(eWidth);
             console.log(eHeight);
-            if (eWidth > 463)
-                eWidth = 463;
-            if (eWidth < 10)
-                eWidth = 10;
-            if (eHeight > 339)
-                eHeight = 339;
-            if (eHeight < 50)
-                eHeight = 50;
+            if (eWidth > 487)
+                eWidth = 487;
+            if (eWidth < 30)
+                eWidth = 30;
+            if (eHeight > 428)
+                eHeight = 428;
+            if (eHeight < 128)
+                eHeight = 128;
             elem.style.left = eWidth + 'px';
             elem.style.top = eHeight + 'px';
 
@@ -121,4 +115,31 @@ function dragElement(imgs) {
     elem.ondragstart = function() {
         return false;
     }
+}
+
+function getPostImg (id_img){
+let imgdone =document.getElementById('image_done');
+ imgdone.src = document.getElementById(id_img).src;
+    imgdone.style.display = '';
+    document.getElementById('snap').style.display = '';
+    document.getElementById('snap').setAttribute('onclick','get_post(' + id_img + ')');
+}
+
+function get_post(id_img) {
+   let massage = document.getElementById('description').value;
+
+   if(massage === '')
+      alert('Add massage');
+   else{
+       value = id_img + '_' + massage;
+       document.getElementById('upload_form').setAttribute('action', '/camera/get_post/');
+       sent = document.createElement('input');
+       document.body.insertBefore(sent,document.getElementById('before'));
+     sent.setAttribute('type', 'text');
+      sent.setAttribute('form', 'upload_form');
+       sent.setAttribute('name', 'data');
+       sent.style.display = 'none';
+       sent.setAttribute('value', value);
+       document.getElementById('submit').click();
+   }
 }

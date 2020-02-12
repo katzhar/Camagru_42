@@ -12,25 +12,48 @@ class Controller_Camera extends Controller
     public function action_index($param = NULL)
     {
         $login = $this->model->authenticate();
-        ($login === false) ? header("Location: /main") :
-$this->view->generate('camera_view.php', 'template_view.php');
+
+        if ($login === false)
+            header("Location: /main");
+        else {
+            $data = $this->model->get_datatmp();
+            $this->view->generate('camera_view.php', 'template_view.php', $data);
+        }
     }
 
-   public function action_upload(){
-       $result = $this->model->upload();
-   }
+    public function action_upload()
+    {
+        $result = $this->model->upload();
+    }
 
     public function action_canvas()
-        {
-            $result = $this->model->upload_image_base();
+    {
 
-            switch ($result) {
-                case 'success':
-                    header("Location: /main");
-                    break;
-                case 'no_image':
-                 header("Location: /camera");
-                   break;
-          }
+        $result = $this->model->upload_image_base_tmp();
+
+        switch ($result) {
+            case 'success':
+                header("Location: /camera");
+                break;
+            case 'no_image':
+                header("Location: /main");
+                break;
         }
+    }
+
+
+    public function action_get_post()
+    {
+
+        $result = $this->model->upload_image_base();
+
+        switch ($result) {
+            case 'success':
+                header("Location: /main");
+                break;
+            case 'no_image':
+                header("Location: /camera");
+                break;
+        }
+    }
 }
