@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Camagru | Settings</title>
 <head>
 <style>
@@ -29,8 +26,8 @@
         color: red;
 }
 #msg {
-            font-weight: bold;
-            color: red;
+        font-weight: bold;
+        color: red;
 }
 </style>
 </head>

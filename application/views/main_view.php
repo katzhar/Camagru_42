@@ -8,7 +8,7 @@
 <body>
 <p align="center">WELCOME TO CAMAGRU, DARLING</p>
 <script src = '/js/main.js'></script>
-
+​
 <?php
 
 $postlike = false;
@@ -68,7 +68,7 @@ UNLIKES;
   <span id="childElement">Comments</span>
   <input id = 'user_id' value = '{$id}'style="display: none">
 </div>
-
+​
 <div class="comments_{$value['Post_ID']}"
 <form method='post' value='' action="/main/comments/" name="formname" target="_parent">
 <textarea id="comments_{$value['Post_ID']}" value = '' class = 'comments' name="message">Add a comment...</textarea>

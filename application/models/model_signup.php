@@ -13,11 +13,9 @@ class Model_Signup extends Model {
 		$data = $stmt->fetch();
 		$count = count($data);
 		foreach ($data as $value) {
-			if ($value === 0) {
+			if ($value === 0) 
 				return Model::SUCCESS;
-		}
-			else 
-				return Model::ERROR;
+			return Model::ERROR;
 		}
 	}
 
@@ -31,11 +29,9 @@ class Model_Signup extends Model {
 		$data = $stmt->fetch();
 		$count = count($data);
 		foreach ($data as $value) {
-			if ($value === 0) {
+			if ($value === 0) 
 				return Model::SUCCESS;
-		}
-			else 
-				return Model::ERROR;
+			return Model::ERROR;
 		}
 	}	
 

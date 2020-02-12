@@ -1,6 +1,4 @@
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Camagru | Settings</title>
 <head>
 <style>
@@ -52,10 +50,10 @@ if (!isset($_SESSION['login']) and !isset($_SESSION['password']))
             <input type="submit" name="submit" value="Submit"><br><br>
             </form>
         <?php
-            if (isset($_SESSION['message'])) {
+        if (isset($_SESSION['message'])) {
                 echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
-            }
-            unset($_SESSION['message']); 
+        }
+        unset($_SESSION['message']); 
         ?>
     </div>
     <div class="clear"></div>
