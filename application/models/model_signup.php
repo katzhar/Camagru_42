@@ -13,11 +13,9 @@ class Model_Signup extends Model {
 		$data = $stmt->fetch();
 		$count = count($data);
 		foreach ($data as $value) {
-			if ($value === 0) {
+			if ($value === 0) 
 				return Model::SUCCESS;
-		}
-			else 
-				return Model::ERROR;
+			return Model::ERROR;
 		}
 	}
 
@@ -31,11 +29,9 @@ class Model_Signup extends Model {
 		$data = $stmt->fetch();
 		$count = count($data);
 		foreach ($data as $value) {
-			if ($value === 0) {
+			if ($value === 0) 
 				return Model::SUCCESS;
-		}
-			else 
-				return Model::ERROR;
+			return Model::ERROR;
 		}
 	}	
 
@@ -61,12 +57,12 @@ class Model_Signup extends Model {
 			header('Location: ../signup');
 			exit();
 		}
-		else if ($password === strtolower($password) or strlen($password) < 4) {
+		else if ($password === strtolower($password) or strlen($password) < 5) {
 			$_SESSION['message'] = "YOUR PASSWORD MUST CONTAIN AT LEAST 5 CHARACTERS AND 1 UPPERCASE LETTER";
 			header('Location: ../signup');
 			exit();
 		}
-		elseif (is_numeric($login) or strlen($login) < 4) {
+		elseif (is_numeric($login) or strlen($login) < 5) {
 			$_SESSION['message'] = "YOUR USERNAME MUST CONTAIN AT LEAST 5 CHARACTERS";
 			header('Location: ../signup');
 			exit();

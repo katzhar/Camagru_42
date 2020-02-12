@@ -153,4 +153,3 @@ class Model_Settings extends Model {
         }
     }
 }
-?>

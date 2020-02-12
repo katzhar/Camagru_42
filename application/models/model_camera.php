@@ -2,14 +2,17 @@
 session_start();
 class Model_Camera extends Model
 {
-    public function authenticate()
-    {
+    public function authenticate() {
         if (!isset($_SESSION['login']))
             return false;
         return true;
     }
 
+<<<<<<< HEAD
     public function upload_image_base_tmp()
+=======
+    public function upload_image_base()
+>>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
     {
         if (!isset($_POST['base_img']))
             return ('no_image');
@@ -18,11 +21,16 @@ class Model_Camera extends Model
             $sticker = explode('_', $sticker);
             $sticker[2] = intval($sticker[2]);
             $sticker[3] = intval($sticker[3]);
+<<<<<<< HEAD
             $data = explode(',', $_POST['base_img']);
+=======
+            $data = explode(',' , $_POST['base_img']);
+>>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
             $img = imagecreatefromstring(base64_decode($data[1])); //переводим из base64 в изображение
             if ($img === false)
                 return 'no_image';
             $image_name = hash('crc32', rand()) . '.jpg'; //хешируем название
+<<<<<<< HEAD
             $src = imagecreatefrompng('images/' . $sticker[1] . '.png');
             imagesavealpha($src, true); //сохраняем альфа канал у стикера
             $img = imagescale($img, 640, 480); //ставим размер изображения
@@ -35,10 +43,25 @@ class Model_Camera extends Model
             imagedestroy($img);
             imagedestroy($src);
             $this->update_dbtmp($image_name);
+=======
+            $src = imagecreatefrompng('images/'.$sticker[1].'.png');
+            imagesavealpha($src, true); //сохраняем альфа канал у стикера
+            $img = imagescale($img, 640, 480); //ставим размер изображения
+            $src = imagescale($src, 180, 180);
+    // объединение изображений
+            imagecopy($img, $src, $sticker[2]-10, $sticker[3]-50, 0, 0, imagesx($src), imagesy($src));
+    // сохраняем изображение в папку
+            imagejpeg($img,  "images/user_image/$image_name");
+            //чистим память
+            imagedestroy($img);
+            imagedestroy($src);
+            $this->update_db($image_name);
+>>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
             return ('success');
         }
     }
 
+<<<<<<< HEAD
     public function upload_image_base()
     {
         if (!isset($_POST['data']))
@@ -52,6 +75,9 @@ class Model_Camera extends Model
     }
     private function update_db($data)
     {
+=======
+    private function update_db($image_name) {
+>>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
         require 'config/database.php';
         $pdo = new PDO($dsn, $db_user, $db_password, $options);
         $pdo->exec('USE camagru_db');
@@ -60,8 +86,13 @@ class Model_Camera extends Model
         $sql->execute(array($data[0]));
         $postimg = $sql->fetch();
         $sql = 'INSERT INTO `post_img` (`User_ID`, `Image`, `Message`, `Creation_Date`) VALUES (?, ?, ?, NOW())';
+<<<<<<< HEAD
         $id = $_SESSION['id'];
         $message = $data[1];
+=======
+        $id = $id['User_ID'];
+        $message = 'hello pizza!';//isset($_POST['description']) ? mb_strimwidth($_POST['description'], 0, 250) : null;
+>>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
         $sth = $pdo->prepare($sql);
         $sth->execute(array($id, $postimg['Image'], $message));
         $sql = 'DELETE FROM tmp_img WHERE `id` = ?';
@@ -70,6 +101,7 @@ class Model_Camera extends Model
 
     }
 
+<<<<<<< HEAD
     public function upload()
     {
         if (isset($_FILES['picture']['type']) && $_FILES['picture']['type'] != NULL) {
@@ -78,6 +110,15 @@ class Model_Camera extends Model
             $image_name = hash('crc32', rand()) . '.' . $type[1]; //хешируем название
 // Массив допустимых значений типа файла
             $types = array('image/gif', 'image/png', 'image/jpeg');
+=======
+    public function upload() {
+        $path = 'images/user_image/';
+        $type = explode('/',$_FILES['picture']['type']);
+        $image_name = hash('crc32', rand()) . '.' . $type[1]; //хешируем название
+// Массив допустимых значений типа файла
+        $types = array('image/gif', 'image/png', 'image/jpeg');
+        $type = explode('/',$_FILES['picture']['type']);
+>>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
 // Максимальный размер файла
             $size = 100240000;
 // Обработка запроса
