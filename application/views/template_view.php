@@ -1,6 +1,5 @@
 <html>
 <head>
-	<meta charset="utf-8">
 	<link href="../css/style.css" rel="stylesheet">
 </head>
 <a href="/main"><header id="header_template">
@@ -27,4 +26,7 @@
 	<?php include 'application/views/'.$content_view; ?>
 	</div>
 </body>
+<footer>
+  <a href="/camera"><img id="logo_temp" src="https://i.pinimg.com/originals/2a/f7/0b/2af70b7eb1194dfea457cdc3b386691b.png"></a>
+</footer>
 </html>

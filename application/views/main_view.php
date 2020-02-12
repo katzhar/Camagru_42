@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <title>Camagru</title>
-    <style>
-    </style>
 </head>
+<style>
+    body {
+        text-align: center;
+    }
+</style>
 <body>
-<p align="center">WELCOME TO CAMAGRU, DARLING</p>
-<script src = '/js/main.js'></script>
-​
+<script src='/js/main.js'></script>
 <?php
 $postlike = false;
     if (isset($data['like_post']) && $data['like_post'] != NULL) {
@@ -42,29 +42,28 @@ LIKES;
                 $postlike = true;
             }
         }
-        else if (!isset($_SESSION['login']))
-        {
+        else if (!isset($_SESSION['login'])) {
             echo <<< UNLIKES
- <form id = "formlike_{$value['Post_ID']}" action="/main/likes" method=POST>
- <p id = 'p_{$value['Post_ID']}'>{$value['Likes']}</p><img  id = 'img_{$value['Post_ID']}' src = 'images/unlike.png'  width="35px" height="30px">
-                </form>
+            <form id = "formlike_{$value['Post_ID']}" action="/main/likes" method=POST>
+                <p id = 'p_{$value['Post_ID']}'>{$value['Likes']}</p><img  id = 'img_{$value['Post_ID']}' src = 'images/unlike.png'  width="35px" height="30px">
+            </form>
 UNLIKES;
         }
         if (isset($_SESSION['login']) && $postlike === false) {
             echo <<< UNLIKES
- <form id = "formlike_{$value['Post_ID']}" action="/main/likes" method=POST>
- <p id = 'p_{$value['Post_ID']}'>{$value['Likes']}</p><img  id = 'img_{$value['Post_ID']}' src = 'images/unlike.png' onclick="getLike({$value['Post_ID']})" width="35px" height="30px">
-                </form>
+        <form id = "formlike_{$value['Post_ID']}" action="/main/likes" method=POST>
+            <p id = 'p_{$value['Post_ID']}'>{$value['Likes']}</p><img  id = 'img_{$value['Post_ID']}' src = 'images/unlike.png' onclick="getLike({$value['Post_ID']})" width="35px" height="30px">
+        </form>
 UNLIKES;
         }
-        if(isset($_SESSION['login']))
+        if (isset($_SESSION['login']))
             $id = $_SESSION['login'];
         else
             $id = 0;
         $postlike = false;
         echo <<<COMMENT
 <div id="parentElement">
-  <span id="childElement">Comments</span>
+  <span id="childElement"></span>
   <input id='user_id' value = '{$id}'style="display:none">
 </div>
     <div class="comments_{$value['Post_ID']}">
