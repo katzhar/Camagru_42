@@ -1,15 +1,27 @@
 <?php
 session_start();
-class Model_main extends Model {
-    public function get_data() {
+class Model_main extends Model
+{
+    public function get_data()
+    {
         require_once "config/database.php";
+        require_once "config/setup.php";
         $pdo = new PDO($dsn, $db_user, $db_password, $options);
         $pdo->exec('USE camagru_db');
-        $sql = 'SELECT * FROM post_img ORDER BY Creation_Date DESC';
+        $sql = 'SELECT users.login, post_img.* FROM post_img JOIN users  ON users.User_ID = post_img.User_ID ORDER BY Creation_Date DESC';
         $sql = $pdo->prepare($sql);
         $sql->execute();
         $data = $sql->fetchAll();
-        if (isset($_SESSION['login'])) {
+        $sql = 'SELECT * FROM comments';
+        $sql = $pdo->prepare($sql);
+        $sql->execute();
+        $comments = $sql->fetchAll();
+        if ($comments != NULL)
+            $data = $this->get_data_usercom($data, $comments, 'comments');
+        else
+            $data['comments'] = NULL;
+        if (isset($_SESSION['login']))
+        {
             $sql = 'SELECT Post_ID FROM likes WHERE User_ID = ?';
             $sql = $pdo->prepare($sql);
             $sql->execute(array($_SESSION['id']));
@@ -17,24 +29,25 @@ class Model_main extends Model {
             if ($userdata != NULL)
                 $data = $this->get_data_user($data, $userdata, 'like_post');
             else
-                $data['like_post'] = NULL;
-<<<<<<< HEAD
-            $sql = 'SELECT *FROM comments';
-=======
-            $sql = 'SELECT * FROM comments';
->>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
-            $sql = $pdo->prepare($sql);
-            $comments = $sql->fetchAll();
-            if ($comments != NULL)
-                $data = $this->get_data_user($data, $userdata, 'comments');
-            else
-                $data['comments'] = NULL;
+$data['like_post'] = NULL;
         }
-        return($data);
-    }
-
+return ($data);
+}
+//тут добавляется массив like
     public function get_data_user($data, $userdata, $name){
         array_push($data, $userdata);
+        $count = count($data) - 2;
+        foreach ($data as $key=> $value) {
+            if ($key === $count)
+                $newdata[$name] = $value;
+            else
+                $newdata[$key] = $value;
+        }
+        return($newdata);
+    }
+    //тут добавляется массив сщььутеы
+    public function get_data_usercom($data, $comments, $name){
+        array_push($data, $comments);
         $count = count($data) - 1;
         foreach ($data as $key=> $value) {
             if ($key === $count)
@@ -44,7 +57,6 @@ class Model_main extends Model {
         }
         return($newdata);
     }
-
     public function change_likes($param) {
         require_once "config/database.php";
         if (isset($_SESSION['login'])) {
@@ -71,48 +83,41 @@ class Model_main extends Model {
             }
         }
     }
-<<<<<<< HEAD
-    public function change_comments($param){
-        if (isset($_SESSION['login'])) {
-            require_once "config/database.php";
-            $value = explode('_', $param);
-            $pdo = new PDO($dsn, $db_user, $db_password, $options);
-            $pdo->exec('USE camagru_db');
-            $sql = 'INSERT INTO `comments` (`Post_ID`,`User_ID`, `Comment`) VALUES (?, ?, ?)';
 
-            $id = $_SESSION['login'];
-            $sth = $pdo->prepare($sql);
-            $sth->execute(array($value[0], $id, $value[1]));
+    public function change_comments() {
+      $postData = file_get_contents('php://input');
+      $data = json_decode($postData, true);
+      $comment = htmlspecialchars($data['comment']);
+      $post_id = $data['post_id'];
+      if ($comment && $post_id && $_SESSION['id']) {
+
+        $addComment = $this->comment_db($comment, $post_id);
+           if ($addComment === true) {$data['login'] = $_SESSION['login'];
+               header('Content-Type: application/json');
+               echo json_encode($data);
+           }
+           else
+                echo json_encode(array('error' => "Произошла ошибка"));
         }
+       return true;
     }
-
-    public function action_signout(){
-        if (isset($_SESSION['login'])) {
-            session_destroy();
-            echo'done destroy';
-            //header('Location: /');
-        }
-    }
-=======
-
-    public function change_comments($message) {
-        require_once "config/database.php";
+          public function comment_db($comment,$post_id)
+          {
+              require_once "config/database.php";
         if (isset($_SESSION['login'])) {
             $login = $_SESSION['login'];
-            $id = $_SESSION['id'];
-            $comment = $_POST['message'];
             $dbh = new PDO($dsn, $db_user, $db_password, $options);
             $dbh->exec('USE camagru_db');
             $sql = 'INSERT INTO comments (`Login`, `Post_ID`, `Comment`) VALUES (?, ?, ?)';
-            $arr = array($login, $id, $comment);
+            $arr = array($login, $post_id, $comment);
             if ($this->add_info_to_db($dbh, $sql, $arr) === Model::SUCCESS) {
                 $sql = "SELECT `User_ID` FROM `post_img` WHERE `Post_ID`=?";
-                $arr = array($id);
+                $arr = array($post_id);
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute($arr);
                 $data = $stmt->fetch();
                 if ($data) {
-                    $user_id = $data['User_ID'];
+                    $id = $data['User_ID'];
                     $sql = "SELECT `e-mail` FROM `users` WHERE `User_ID`=?";
                     $arr = array($id);
                     $stmt = $dbh->prepare($sql);
@@ -121,34 +126,65 @@ class Model_main extends Model {
                     if ($data) {
                         $email = $data['e-mail'];
                         $this->notification_email($email, $login);
-                        header ('Location: ../main');
+                     //   header ('Location:/');
                     }
                 }
             }
         }
+        return true;
     }
 
-	private function add_info_to_db($dbh, $sql, $arr) {
-		try {
-			$stmt = $dbh->prepare($sql);
-			$stmt->execute($arr);
-			return Model::SUCCESS;
-		}
-		catch (PDOException $err) {
-			$err->getMessage();
-			return Model::ERROR;	
-		}
-	}
+    private function add_info_to_db($dbh, $sql, $arr) {
+        try {
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute($arr);
+            return Model::SUCCESS;
+        }
+        catch (PDOException $err) {
+            $err->getMessage();
+            return Model::ERROR;
+        }
+    }
 
     public function notification_email($email, $login) {
-		include "config/database.php";
-		$subject 	= "Someone comments on your picture!";
-		$body 		= "Hi, " . $login . "!" . "\r\n" . "Checkout the latest actions in your profile!" . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
-		$header 	= "From: notification@camagru.com";
-					"CC: notification@camagru.com";
-		if (mail($email, $subject, $body, $header)) 
-			return Model::SUCCESS;
-		return Model::ERROR;
-	}
->>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
+        include "config/database.php";
+        $subject 	= "Someone comments on your picture!";
+        $body 		= "Hi, " . $login . "!" . "\r\n" . "Checkout the latest actions in your profile!" . "\r\n\n" . "Cheers," . "\r\n" . "Camagru";
+        $header 	= "From: notification@camagru.com";
+        "CC: notification@camagru.com";
+        if (mail($email, $subject, $body, $header))
+            return Model::SUCCESS;
+        return Model::ERROR;
+    }
+    public function delete($param){
+        print_r($param);
+        $data = explode('_', $param);
+       if(!isset($data[1]))
+          $this->deletepost($data[0]);
+       else
+           $this->deletecomments($data);
+    }
+
+    public function deletepost($param){
+        require_once "config/database.php";
+        $pdo = new PDO($dsn, $db_user, $db_password, $options);
+        $pdo->exec('USE camagru_db');
+        $sql = 'DELETE FROM post_img WHERE post_img.Post_ID = ?';
+        $sql = $pdo->prepare($sql);
+        $sql->execute(array($param));
+        $sql = 'DELETE FROM likes WHERE likes.Post_ID = ?';
+        $sql = $pdo->prepare($sql);
+        $sql->execute(array($param));
+        $sql = 'DELETE FROM comments WHERE comments.Post_ID = ?';
+        $sql = $pdo->prepare($sql);
+        $sql->execute(array($param));
+    }
+    public function deletecomments($param){
+        require_once "config/database.php";
+        $pdo = new PDO($dsn, $db_user, $db_password, $options);
+        $pdo->exec('USE camagru_db');
+        $sql = 'DELETE FROM comments WHERE comments.Post_ID = ? AND comments.id = ?';
+        $sql = $pdo->prepare($sql);
+        $sql->execute(array($param[0],$param[1]));
+    }
 }

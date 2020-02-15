@@ -44,12 +44,7 @@ class Route {
 			include "application/controllers/".$controller_file;
 		}
 		else {
-			/*
-			правильно было бы кинуть здесь исключение,
-			но для упрощения сразу сделаем редирект на страницу 404
-			*/
-			echo "Error";
-			// Route::ErrorPage404();
+			Route::ErrorPage404();
 		}
 		// создаем контроллер
 		$controller = new $controller_name;
@@ -59,15 +54,32 @@ class Route {
 			// вызываем действие контроллера
 			$controller->$action($param);
 		}
-		// else {
-		// 	// здесь также разумнее было бы кинуть исключение
-		// 	Route::ErrorPage404();
-		// }
+		 else {
+		 // здесь также разумнее было бы кинуть исключение
+		 	Route::ErrorPage404();
+             return ;
+		 }
 	}
-	// function ErrorPage404() {
-    //     $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-    //     header('HTTP/1.1 404 Not Found');
-	// 	header("Status: 404 Not Found");
-	// 	header('Location:'.$host.'404');
-    // }
+	 function ErrorPage404() {
+         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+         header('HTTP/1.1 404 Not Found');
+	 	header("Status: 404 Not Found");
+	 	header('Location:'.$host.'404');
+	 	echo <<< ERROR
+<html lang="en">
+<head>
+<style> 
+    h1 {
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 40%;
+    }
+</style>
+</head>
+<title>Camagru | 404<title>
+<h1>ERROR 404 PAGE NOT FOUND</h1>
+</html>
+ERROR;
+     }
 }

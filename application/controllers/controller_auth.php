@@ -30,7 +30,7 @@ class Controller_Auth extends Controller {
 
     function action_signout() {
         session_destroy();
-        header("Location: /main/");
+        header("Location: /");
         exit();
     }
 }

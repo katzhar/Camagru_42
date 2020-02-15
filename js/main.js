@@ -1,23 +1,21 @@
-let unlike = 'http://localhost:8080/images/unlike.png';
+let imgpost;
+let unlike = 'https://sun9-29.userapi.com/c204628/v204628996/68538/_YhiX3RefCg.jpg';
 let value;
 let input;
-let comment;
-let imgpost;
 
 function getLike(post) {
     let namepost = 'img_'+ post;
     imgpost = document.getElementById(namepost);
     console.log(imgpost.src);
-    if(imgpost.src === unlike) {
-    imgpost.src ='images/like.png';
-    like(post);
+    if(imgpost.src === unlike){
+        imgpost.src ='https://sun9-43.userapi.com/c204628/v204628996/6853f/eltI7W9Ft7M.jpg';
+        like(post);
     }
     else {
-        imgpost.src = 'images/unlike.png';
+        imgpost.src = 'https://sun9-29.userapi.com/c204628/v204628996/68538/_YhiX3RefCg.jpg';
         dislike(post);
     }
 }
-
 async function like(post) {
     let like = 'p_' + post;
     let value = document.getElementById(like).innerHTML;
@@ -27,9 +25,11 @@ async function like(post) {
     value = post + '_' + 'like';
     document.getElementById('formlike_' + post).setAttribute('action', '/main/likes/' + value);
     let response = await fetch('/main/likes/'+ value);
-}
 
+
+}
 async function  dislike(post) {
+
     let like = 'p_'+ post;
     value = document.getElementById(like).innerHTML;
     value--;
@@ -38,35 +38,61 @@ async function  dislike(post) {
     document.getElementById('formlike_' + post).setAttribute('action', '/main/likes/' + value);
     let response = await fetch('/main/likes/'+ value);
 }
+async function deletePost(post_id) {
+    let result = confirm('Are you sure you want to delete the post?');
+    if(result === true)
+    {
+        document.getElementById('post_' + post_id).style.display = 'none';
+       let response = await fetch('/main/delete/'+ post_id);
+    }
+}
 
-async function getComment(post) {
-<<<<<<< HEAD
-comment =  document.getElementById('comments_' + post).value;
-console.log(comment);
-=======
-    comment =  document.getElementById('comments_' + post).value;
->>>>>>> 4cfc45e20e77fc38ff5ba1e0555d549043490b4e
-    let login = document.getElementById('user_id').value;
-    let sp1 = document.createElement("div");
-    var sp2 = document.getElementById("childElement");
-    //Получаем ссылку на родителя sp2
-    var parentDiv = sp2.parentNode;
-    sp1.innerHTML = comment;
-    // Вставляем sp1 перед sp2
-    parentDiv.insertBefore(sp1, sp2);
-    let p_login = document.createElement("bold");
-        // Получаем ссылку на элемент, перед которым мы хотим вставить sp1
-    //Получаем ссылку на родителя sp2
-    var parentDiv = sp2.parentNode;
-    p_login.innerHTML = login;
-    // Вставляем sp1 перед sp2
-    parentDiv.insertBefore( p_login, sp2);
-        //Получаем ссылку на родителя sp2
-    var parentDiv = sp2.parentNode;
-    sp1.innerHTML = comment;
-    // Вставляем sp1 перед sp2
-    parentDiv.insertBefore(sp1, sp2);
-    document.getElementById('comments_' + post).value = '';
-    value = post + '_' + comment;
-    let response = await fetch('/main/comments/'+ value);
+window.onload = function () {
+    let commentForm = document.querySelectorAll('.com_form .submitForm');
+    if (commentForm !== null) {
+        commentForm.forEach(function (el) {
+            let post_id = el.previousElementSibling;
+            let comTest = el.nextElementSibling;
+            el.onclick = async function (event){
+                console.log(event);
+                event.preventDefault();
+                let data = {
+                    "post_id": post_id.value,
+                    "comment": comTest.value
+                };
+                let comm = await fetch('/main/comments/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                let commentData = await comm.json();
+                console.log(commentData);
+                if (commentData) {
+                    let commentBlock = document.querySelector(".item__detail_"+ post_id.value );
+                    let commentRow = document.createElement("div");
+                    commentRow.classList.add("detail__row");
+                    let commentLogin = document.createElement('a');
+                    commentLogin.classList.add("item__user-name");
+                    commentLogin.innerHTML = commentData['login'] + ' ';
+                    let commentDescription = document.createElement('span');
+                    commentDescription.classList.add('item__user-description');
+                    commentDescription.innerHTML = data['comment'];
+                    commentRow.appendChild(commentLogin);
+                    commentRow.appendChild(commentDescription);
+                    commentBlock.appendChild(commentRow);
+                    comTest.value = '';
+
+                }
+            }
+        })
+    }
+};
+
+function DelCom(idcom) {
+    let result = confirm('Are you sure you want to delete the comment?');
+    if(result === true)
+        document.getElementById('comm_' + idcom).style.display = 'none';
+       // let response = await fetch('/main/delete/'+ post_id);
 }

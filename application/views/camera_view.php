@@ -69,7 +69,7 @@ IMG;
         echo <<<IMG
         <img id = 'image_done' width="640" height="480" src = '{$_SESSION['user_file']}'>
         <p>Description</p><br>
-        <textarea  type="text" id="description" form="upload_form" maxlength="250" name="description"></textarea></div>
+        <textarea  type="text"  pattern="/(^[a-z0-9._?!\ \)\(']{0,256}$)/i" id="description" form="upload_form" maxlength="250" name="description"></textarea></div>
 <button id="snap" type="submit" onclick = 'get_post({$_SESSION['id_user_file']})' >SEND IMAGE</button>
 </div>
 <input style="display: none" id="submit" type="submit" form="upload_form">
