@@ -12,19 +12,105 @@
         width: 180px;
         height: 135px;
     }
-#preview{
-    display: inline-block;
-    width: 640px;
-    height: 50px;
-}
-
+    #preview{
+        display: inline-block;
+        width: 640px;
+        height: 50px;
+    }
+    #logo_temp {
+        width: 30px; 
+        height: 25px;
+        align-items: center;
+    }
+    .header { 
+        background: #d0d0e1; 
+        position: fixed;
+        height: 40px;
+        width: 99%;
+        color: black;
+        padding: 5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        top: 0;
+    }
+    .logo {
+        float: left;
+        padding: 12px;
+    }
+    nav {
+        float: right;
+        padding: 5px;
+    }
+    nav ul {
+        margin: 0;
+        padding: 0;
+    }
+    nav li {
+        display: inline-block;
+        padding: 5px;
+    }
+    #upload_form {
+        padding-top: 50px;
+    } 
+    #description {
+        padding: 5px;
+        margin: 5px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .upload_button {
+        background-color: #f1f1f1;
+        color: black;
+        padding: 5px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    #before {
+        background-color: #f1f1f1;
+        color: black;
+        padding: 3px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+        a {
+        text-decoration: none;
+        color: black;
+    }
+    a:hover {
+        text-decoration: none;
+        font-weight: bold;
+    }
 </style>
+ <div class="header" style="text-decoration:none; color:black">
+ <div class="logo"><a style="text-decoration:none; color:black" href="/main">CAMAGRU</a></div>
+ <nav>
+ <ul>
+	<?php
+        if (!isset($_SESSION['login']) and !isset($_SESSION['password'])) {
+                echo "<li><a style='text-decoration:none; color:black'; href='/auth'>Sign In</a></li>";
+                echo "<li><a style='text-decoration:none; color:black'; href='/signup'>Sign Up</a>";
+        }
+        else {
+            echo "<li><a style='text-decoration:none; color:black'; href='/main'>{$_SESSION['login']}</a></li>";
+            echo "<li><a style='text-decoration:none; color:black'; href='/settings'>Settings</a></li>";
+            echo "<li><a style='text-decoration:none; color:black'; href='/auth/signout'>Sign Out</a></li>";
+        }
+  ?>  
+      </ul>
+    </nav>
+ </div>
 <?php
 if (isset($_SESSION['message'])) {
     echo '<p id="msg"> ' . $_SESSION['message'] . ' </p>';
 }
 unset($_SESSION['message']);
 ?>
+
 <form id="upload_form" enctype="multipart/form-data" action="/camera/upload/" method="post">
     <input id=" before" name="picture" type="file" />
     <input type="submit" value="Загрузить" />

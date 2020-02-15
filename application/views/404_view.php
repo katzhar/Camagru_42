@@ -1,14 +1,9 @@
 <html lang="en">
 <head>
-<style> 
-    h1 {
-        text-align: center;
-        height: 100%;
-        width: 100%;
-        margin-top: 40%;
-    }
-</style>
+    <title>Camagru | 404</title>
 </head>
-<title>Camagru | 404<title>
-<h1>ERROR 404 PAGE NOT FOUND</h1>
+<body>
+    <h1 style="text-align:center">404</h1>
+    <h2 style="text-align:center">PAGE NOT FOUND</h2>
+</body>
 </html>

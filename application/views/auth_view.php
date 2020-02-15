@@ -19,7 +19,7 @@
        </form>
        <?php
         if (isset($_SESSION['message'])) {
-            echo '<p id="msg_auth"> ' . $_SESSION['message'] . ' </p>';
+            echo '<p id="msg" style="text-align:center"> ' . $_SESSION['message'] . ' </p>';
         }
         unset($_SESSION['message']); 
         ?>

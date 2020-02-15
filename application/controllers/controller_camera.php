@@ -17,7 +17,7 @@ class Controller_Camera extends Controller
             header("Location: /main");
         else {
             $data = $this->model->get_datatmp();
-            $this->view->generate('camera_view.php', 'template_view.php', $data);
+            $this->view->generate('camera_view.php','camera_view.php', $data);
         }
     }
 

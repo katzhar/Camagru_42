@@ -24,6 +24,7 @@ async function like(post) {
     document.getElementById(like).innerHTML = value;
     value = post + '_' + 'like';
     document.getElementById('formlike_' + post).setAttribute('action', '/main/likes/' + value);
+    // document.getElementById('formlike_'+ post).submit();
     let response = await fetch('/main/likes/'+ value);
 
 
@@ -36,6 +37,7 @@ async function  dislike(post) {
     document.getElementById(like).innerHTML = value;
     value = post + '_' + 'dislike';
     document.getElementById('formlike_' + post).setAttribute('action', '/main/likes/' + value);
+    // document.getElementById('formlike_'+ post).submit();
     let response = await fetch('/main/likes/'+ value);
 }
 async function deletePost(post_id) {

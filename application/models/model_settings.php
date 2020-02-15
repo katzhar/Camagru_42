@@ -63,7 +63,7 @@ class Model_Settings extends Model {
         include "config/database.php";
         $email = $_SESSION['email'];
         $email_new = $_POST['email_new'];
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email_new, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['message'] = "INVALID E-MAIL";
             header('Location: ../settings/changeemail');
             exit();

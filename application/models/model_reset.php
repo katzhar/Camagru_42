@@ -76,7 +76,12 @@ class Model_Reset extends Model {
 			$_SESSION['message'] = "INVALID E-MAIL";
 			header('Location: ../reset');
 			exit();
-        }
+		}
+		if ($this->check_email($_POST['email']) === Model::ERROR) {
+			$_SESSION['message'] = "SUCH E-MAIL ISN'T REGISTERED";
+			header('Location: ../reset');
+			exit();
+		}
         else {
             try {
                 $dbh = new PDO($dsn, $db_user, $db_password, $options);
@@ -96,6 +101,22 @@ class Model_Reset extends Model {
         }
 	}
 
+	function check_email($email) {
+		include "config/database.php";
+		$dbh = new PDO($dsn, $db_user, $db_password, $options);
+		$dbh->exec('USE camagru_db');
+		$sql_checkemail = "SELECT COUNT(*) FROM users WHERE `e-mail`=?";
+		$stmt = $dbh->prepare($sql_checkemail);
+		$stmt->execute(array($email));
+		$data = $stmt->fetch();
+		$count = count($data);
+		foreach ($data as $value) {
+			if ($value === 0) 
+				return Model::ERROR;
+			return Model::SUCCESS;
+		}
+	}
+	
     private function add_info_to_db($dbh, $sql, $arr) {
 		try {
 			$stmt = $dbh->prepare($sql);
