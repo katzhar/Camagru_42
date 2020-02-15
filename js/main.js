@@ -41,9 +41,11 @@ async function  dislike(post) {
     let response = await fetch('/main/likes/'+ value);
 }
 async function deletePost(post_id) {
+    console.log(post_id);
     let result = confirm('Are you sure you want to delete the post?');
     if(result === true)
     {
+        console.log(post_id);
         document.getElementById('post_' + post_id).style.display = 'none';
        let response = await fetch('/main/delete/'+ post_id);
     }
@@ -80,11 +82,13 @@ window.onload = function () {
                     commentLogin.innerHTML = commentData['login'] + ' ';
                     let commentDescription = document.createElement('span');
                     commentDescription.classList.add('item__user-description');
-                    commentDescription.innerHTML = data['comment'];
+                    commentDescription.innerText = data['comment'];
                     commentRow.appendChild(commentLogin);
                     commentRow.appendChild(commentDescription);
                     commentBlock.appendChild(commentRow);
                     comTest.value = '';
+                    let br = document.createElement("br");
+                    commentBlock.appendChild(br);
 
                 }
             }

@@ -2,11 +2,6 @@
 <head>
 	<link href="../css/style.css" rel="stylesheet">
 </head>
-<a href="/main"><header id="header_template">
-        <a href="/camera"><img id="logo_temp" src="https://i.pinimg.com/originals/2a/f7/0b/2af70b7eb1194dfea457cdc3b386691b.png"></a>
-<div class="cont"><a href="/main" class="logo">CAMAGRU</a>
-    <nav>
-      <ul>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <style type="text/css">
    .header { 
@@ -48,9 +43,9 @@
        text-align: center;
        padding: 10px;
        }
-   .layout DIV { 
+   /* .layout DIV { 
        float: left; 
-       }
+       } */
    .col1 { 
        background: #f1f1f1; 
        width: 25%; 

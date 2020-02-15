@@ -1,9 +1,10 @@
 <?php
 require_once 'config/setup.php';
 $db_name = "camagru_db";
-$db_hostname = "172.17.0.3";
+$db_host = "172.17.0.3";
 $db_user = "root";
 $db_password = "root";
+$db_charset = "utf8";
 
 $dsn = "mysql:host=172.17.0.3;dbname=" . $db_name;"charset=utf8";
 
