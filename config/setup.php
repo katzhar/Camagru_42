@@ -2,7 +2,6 @@
 include "database.php";
 try {
     $pdo = new PDO($dsn, $db_user, $db_password);
-
     $pdo->exec('CREATE DATABASE IF NOT EXISTS camagru_db CHARACTER SET utf8 COLLATE utf8_general_ci;');
     $pdo->exec('USE camagru_db');
 
@@ -19,7 +18,6 @@ try {
                 `reset_link` VARCHAR(255) DEFAULT NULL,
                 `verified` INT NOT NULL DEFAULT '0')";
     $pdo->exec($users_table);
-
 }
 catch(PDOException $err) {
        $err->getMessage();

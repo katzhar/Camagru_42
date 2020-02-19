@@ -24,21 +24,33 @@ class Model_Settings extends Model {
         include "config/database.php";
         $login = $_SESSION['login'];
         $login_new = $_POST['login_new'];
+        $pdo = new PDO($dsn, $db_user, $db_password, $options);
+        $pdo->exec('USE camagru_db');
+        $sql = "SELECT * FROM users WHERE login=?";
+        $sql = $pdo->prepare($sql);
+        $sql->execute(array($login_new));
+        $checklogin = $sql->fetch();
         if (is_numeric($login_new) or strlen($login_new) < 5) {
             $_SESSION['message'] = "YOUR USERNAME MUST CONTAIN AT LEAST 5 CHARACTERS";
-            header('Location: ../settings');
+           header('Location: ../settings');
             exit();
         }
-        elseif (stripos($login_new, ' ')) {
+        else if (stripos($login_new, ' ')) {
             $_SESSION['message'] = "YOUR USERNAME MUST NOT CONTAIN ANY SPACES";
             header('Location: ../settings');
             exit();
         }
-        elseif (preg_match('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/',$login_new)) {
+        else if (preg_match('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/',$login_new)) {
             $_SESSION['message'] = "YOUR USERNAME MUST NOT CONTAIN ANY SPECIAL CHARACTERS";
             header('Location: ../settings');
             exit();
         }
+      else if ($checklogin['login'] === $login_new ){
+           $_SESSION['message'] = "THIS USERNAME IS ALREADY IN USE, CHOOSE ANOTHER ONE";
+           header('Location: ../settings');
+           exit();
+       }
+
         try {
             $dbh = new PDO($dsn, $db_user, $db_password, $options);
             $dbh->exec('USE camagru_db');
@@ -49,8 +61,10 @@ class Model_Settings extends Model {
                 $arr = array($login_new, $login);
                 $this->add_info_to_db($dbh, $sql_updlog, $arr);
                 $_SESSION['login'] = $login_new;
+                $sql_updlog_comm = "UPDATE comments SET Login=? WHERE Login=?";
+                $this->add_info_to_db($dbh, $sql_updlog_comm, $arr);
                 $_SESSION['message'] = "YOUR USERNAME HAS BEEN CHANGED SUCCESSFULLY";
-                header('location: ../settings');
+               header('location: ../settings');
                 exit();
             }	
         }

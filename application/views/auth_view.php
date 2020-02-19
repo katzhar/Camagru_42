@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/style.css" rel="stylesheet">
     <title>Camagru | Log In</title>
 </head>

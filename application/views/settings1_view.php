@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camagru | Settings</title>
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -11,7 +12,7 @@ if (!isset($_SESSION['login']) and !isset($_SESSION['password']))
 <div id="container_1">
   <div id="container_2">
     <div id="left_column">
-    <p style="font-weight: bold"><a href="../settings">Settings</a><p><br>
+    <p style="font-weight: bold"><a href="../settings">Settings</a></p>
     <h4><a href="../settings">Change username</a></h4>
     <h5><a href="../settings/changeemail">Change e-mail</a></h5>
     <h5><a href="../settings/changepassword">Change password</a></h5>

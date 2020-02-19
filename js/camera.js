@@ -10,6 +10,7 @@ window.onload = function() {
     start_camera();
     document.getElementById('preview').addEventListener('click', get_foto);
 };
+
 function get_foto() {
     if (!isVideo) alert('Нажмите "разрешить" в верху окна');
     document.getElementById('upload_form').setAttribute('action', '/camera/canvas/');
@@ -31,12 +32,14 @@ function get_foto() {
     input.setAttribute('value', sentSt);
     document.getElementById('submit').click();
 }
+
 function video_to_base64() {
     let hcanvas = document.getElementById('hide_canv');
     hcanvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
     let base = hcanvas.toDataURL();
     return base;
 }
+
 function start_camera() {
     if (navigator.mediaDevices.getUserMedia({
         video: true
@@ -47,6 +50,7 @@ function start_camera() {
         isVideo = true;
     }
 }
+
 function delElement(tmp) {
     document.getElementById(tmp.id).remove();
     document.getElementById('preview').style.display = 'none';
@@ -118,28 +122,27 @@ function dragElement(imgs) {
 }
 
 function getPostImg (id_img){
-let imgdone =document.getElementById('image_done');
- imgdone.src = document.getElementById(id_img).src;
+    let imgdone =document.getElementById('image_done');
+    imgdone.src = document.getElementById(id_img).src;
     imgdone.style.display = '';
     document.getElementById('snap').style.display = '';
     document.getElementById('snap').setAttribute('onclick','get_post(' + id_img + ')');
 }
 
 function get_post(id_img) {
-   let massage = document.getElementById('description').value;
-
-   if(massage === '')
+    let massage = document.getElementById('description').value;
+    if(massage === '')
       alert('Add massage');
-   else{
-       value = id_img + '_' + massage;
-       document.getElementById('upload_form').setAttribute('action', '/camera/get_post/');
-       sent = document.createElement('input');
-       document.body.insertBefore(sent,document.getElementById('before'));
-     sent.setAttribute('type', 'text');
-      sent.setAttribute('form', 'upload_form');
-       sent.setAttribute('name', 'data');
-       sent.style.display = 'none';
-       sent.setAttribute('value', value);
-       document.getElementById('submit').click();
+    else{
+        value = id_img + '_' + massage;
+        document.getElementById('upload_form').setAttribute('action', '/camera/get_post/');
+        sent = document.createElement('input');
+        document.body.insertBefore(sent,document.getElementById('before'));
+        sent.setAttribute('type', 'text');
+        sent.setAttribute('form', 'upload_form');
+        sent.setAttribute('name', 'data');
+        sent.style.display = 'none';
+        sent.setAttribute('value', value);
+        document.getElementById('submit').click();
    }
 }

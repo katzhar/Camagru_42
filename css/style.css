@@ -1,13 +1,41 @@
-.comments{
-width: 640px;
+body {
+    margin: 0;
+    padding-bottom: 45px;
+    overflow-x: hidden;
 }
-.post_img{
+.clear {
+    clear: both;
+}
+.inner {
+    max-width: 680px;
+    width: 98%;
+    margin:0 auto;
+}
+.header_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.layout{
+    margin-top: 20px;
+    border-color: #d0d0e1;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+.comments{
     width: 640px;
-    height: 480px;
+}
+.post_img {
+    max-width: 640px;
+    max-height: 480px;
+    min-height: 380px;
+    width: 100%;
+    height: 60vw;
+    border-radius: 5px;
 }
 #container_1 {
     width: 35%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 #container_2 {
     margin-left: 100%;
@@ -23,25 +51,144 @@ width: 640px;
 #right_column {
     padding-top: 82px;
     font-size: 12px;
-} 
+}
 .clear {
     clear: both;
-} 
-#a {
-    color: red;
 }
-#msg {
-        font-weight: bold;
-        color: red;
+#body_reset {
+    font-family: Arial;
+    padding: 10px;
 }
-.cont {
-    width: 100%;
-    padding: 15px;
-} 
+#body_signup {
+      font-family: Arial;
+      padding: 10px;
+    }
+#form_signup {
+      margin: 10px;
+}
+#container_signup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      width: 100%;
+      margin-top: 15%;
+}
+#container_signup input{
+    width: 75%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 15px;
+    padding: 5px 20px 5px 10px;
+}
+#logo_temp {
+    width: 30px; 
+    height: 25px;
+    align-items: center;
+}
+.likes {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.likes a {
+    margin-left: 10px;
+}
+.com_form {
+    margin-top: 2%;
+}
+.new_com {
+    width: 30%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 10px;
+    padding: 5px 20px 5px 10px;
+}
+.submitForm {
+    color: #000080;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.delete:hover {
+    height: 23px;
+    width: 23px;
+    cursor: pointer;
+}
+#login_post {
+    font-size: 17px;
+    font-weight: bold;
+}
+#creation_date_post {
+    font-size: 9px;
+    color: gray;
+    text-align: right;
+    margin-right: 6%;
+}
+.header {
+    background: #d0d0e1;
+    position: relative;
+    color: black;
+    padding: 5px;
+    font-family: 'Roboto', sans-serif;
+}
+.logo {
+    padding: 12px;
+    text-decoration: none;
+}
+nav {
+    padding: 5px;
+    text-decoration: none;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+nav li {
+    display: inline-block;
+    padding: 5px;
+}
+#logo_temp {
+    width: 30px;
+    height: 25px;
+    align-items: center;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+    background: #d0d0e1;
+    text-align: center;
+}
+#page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+#page a {
+    cursor: pointer;
+    padding: 0 2px;
+}
 #body_auth {
     font-family: Arial;
     padding: 10px;
-    background: #f1f1f1;
 }
 #form_auth {
     margin: 10px;
@@ -55,10 +202,18 @@ width: 640px;
     width: 100%;
     margin-top: 15%;
 }
+#container_auth input{
+    width: 75%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 15px;
+    padding: 5px 20px 5px 10px;
+}
 #one {
     color: rgb(82, 82, 82);
-    height: 80%;
-    width: 20%;
+    width: 300px;
+    height: 300px;
     background: linear-gradient(20deg, #c2c2d6, #e6f9ff);
     padding: 1%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.2);
@@ -68,10 +223,10 @@ width: 640px;
     padding: 1%;
 }
 #three {
+    width: 300px;
+    height: 30px;
     font-size: 9px;
     color: rgb(82, 82, 82);
-    height: 20%;
-    width: 20%;
     background: linear-gradient(20deg, #c2c2d6, #e6f9ff);
     padding: 1%;
     box-shadow: 0 1px 1px rgba(0,0,0,0.2);
@@ -93,9 +248,8 @@ width: 640px;
     margin-top: 15%;
 }
 #body_npass {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Roboto', sans-serif;
     padding: 10px;
-    background: #f1f1f1;
 }
 #form_npass {
     margin: 10px;
@@ -112,38 +266,11 @@ width: 640px;
 #form_reset {
     margin: 10px;
 }
-#body_reset {
-    font-family: Arial;
-    padding: 10px;
-    background: #f1f1f1;
-}
-#body_signup {
-      font-family: Arial;
-      padding: 10px;
-      background: #f1f1f1;
-    }
-#form_signup {
-      margin: 10px;
-}
-#container_signup {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      height: 100%;
-      width: 100%;
-      margin-top: 15%;
-}
-.footer { 
-    background: #d0d0e1; 
-    bottom: 0;
-    position: fixed;
-    width: 97%;
-    text-align: center;
-    padding: 1%;
-    }
-#logo_temp {
-    width: 30px; 
-    height: 25px;
-    align-items: center;
+.reset_inp{
+    width: 75%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 15px;
+    padding: 10px 25px 10px 20px;
 }

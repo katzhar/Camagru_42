@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
     <link href="../css/style.css" rel="stylesheet">
     <style>
         div {
@@ -18,8 +21,8 @@
       <div id="container_reset">
         <div id="one"><a href="/main">CAMAGRU</a><br><br>
             <form id="form_reset" method="post" action="/reset/update">
-                <input type="text" name="email" placeholder="e-mail" value="" required="required"><br><br>
-                <input type="submit" name="submit" value="Reset password"><br>
+                <input class = 'reset_inp' type="text" name="email" placeholder="e-mail" value="" required="required"><br><br>
+                <input class = 'reset_sub' type="submit" name="submit" value="Reset password"><br>
        </form>
        <?php
             if (isset($_SESSION['message'])) {

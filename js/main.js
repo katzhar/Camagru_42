@@ -21,7 +21,7 @@ async function like(post) {
     let value = document.getElementById(like).innerHTML;
 
     value++;
-    document.getElementById(like).innerHTML = value;
+    document.getElementById(like).innerHTML = ' ' + value;
     value = post + '_' + 'like';
     document.getElementById('formlike_' + post).setAttribute('action', '/main/likes/' + value);
     // document.getElementById('formlike_'+ post).submit();
@@ -34,19 +34,17 @@ async function  dislike(post) {
     let like = 'p_'+ post;
     value = document.getElementById(like).innerHTML;
     value--;
-    document.getElementById(like).innerHTML = value;
+    document.getElementById(like).innerHTML = ' ' + value;
     value = post + '_' + 'dislike';
     document.getElementById('formlike_' + post).setAttribute('action', '/main/likes/' + value);
     // document.getElementById('formlike_'+ post).submit();
     let response = await fetch('/main/likes/'+ value);
 }
 async function deletePost(post_id) {
-    console.log(post_id);
     let result = confirm('Are you sure you want to delete the post?');
     if(result === true)
     {
-        console.log(post_id);
-        document.getElementById('post_' + post_id).style.display = 'none';
+        document.getElementById('post_' + post_id).remove();
        let response = await fetch('/main/delete/'+ post_id);
     }
 }
@@ -58,7 +56,7 @@ window.onload = function () {
             let post_id = el.previousElementSibling;
             let comTest = el.nextElementSibling;
             el.onclick = async function (event){
-                console.log(event);
+
                 event.preventDefault();
                 let data = {
                     "post_id": post_id.value,
@@ -72,12 +70,14 @@ window.onload = function () {
                     body: JSON.stringify(data),
                 });
                 let commentData = await comm.json();
-                console.log(commentData);
                 if (commentData) {
                     let commentBlock = document.querySelector(".item__detail_"+ post_id.value );
                     let commentRow = document.createElement("div");
-                    commentRow.classList.add("detail__row");
+                    let tmp = 'detail__row' + commentData['comm_id'];
+                    commentRow.id = 'comm_' + commentData['comm_id'];
+                    commentRow.classList.add(tmp);
                     let commentLogin = document.createElement('a');
+                    commentLogin.setAttribute("onclick", 'DelCom(' + commentData['comm_id'] + ')');
                     commentLogin.classList.add("item__user-name");
                     commentLogin.innerHTML = commentData['login'] + ' ';
                     let commentDescription = document.createElement('span');
@@ -96,9 +96,16 @@ window.onload = function () {
     }
 };
 
-function DelCom(idcom) {
+async function DelCom(idcom) {
     let result = confirm('Are you sure you want to delete the comment?');
-    if(result === true)
-        document.getElementById('comm_' + idcom).style.display = 'none';
-       // let response = await fetch('/main/delete/'+ post_id);
+    if (result === true) {
+        document.getElementById('comm_' + idcom).remove();
+   let response = await fetch('/main/delete/'+ idcom + '_comm');
+}
+}
+function pagination(id) {
+    let form_page = document.getElementById("form_page");
+    let value_page = document.getElementById("value_page");
+    value_page.setAttribute('value', id);
+    document.forms['form_page'].submit();
 }
